@@ -1,6 +1,31 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { LogOut } from "lucide-react";
+
 export default function AccountDashboardPage() {
+  const [userName, setUserName] = useState<string>("Loading...");
+  const supabase = createSupabaseBrowserClient();
+
+  useEffect(() => {
+    async function loadUser() {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data?.user) {
+        setUserName("Guest");
+        return;
+      }
+      const name = data.user.user_metadata?.full_name || data.user.email || "Shopper";
+      setUserName(name);
+    }
+    loadUser();
+  }, [supabase.auth]);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    window.location.href = "/login";
+  }
+
   const cardStyle = {
     background: "#FFFFFF",
     boxShadow: "0 4px 24px rgba(248,200,220,0.3)",
@@ -15,13 +40,25 @@ export default function AccountDashboardPage() {
   return (
     <div className="space-y-8">
       {/* Header section in F5E6E8 */}
-      <div style={sectionBgStyle}>
-        <h1 className="font-headline text-4xl font-extrabold tracking-tight" style={titleStyle}>
-          Dashboard
-        </h1>
-        <p className="mt-4 text-base font-medium" style={bodyStyle}>
-          Welcome back to LumiBelle. Here is a quick summary of your account.
-        </p>
+      <div style={sectionBgStyle} className="flex items-start justify-between">
+        <div>
+          <h1 className="font-headline text-4xl font-extrabold tracking-tight" style={titleStyle}>
+            Welcome, {userName}
+          </h1>
+          <p className="mt-4 text-base font-medium" style={bodyStyle}>
+            Here is a quick summary of your LumiBelle account.
+          </p>
+        </div>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 rounded-xl px-4 py-2 font-bold transition-all"
+          style={{ background: "#FFFFFF", color: "#F4A6B8", boxShadow: "0 2px 10px rgba(248,200,220,0.2)" }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = "#E4A1A1"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = "#F4A6B8"; }}
+        >
+          <LogOut className="h-4 w-4" />
+          Logout
+        </button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">

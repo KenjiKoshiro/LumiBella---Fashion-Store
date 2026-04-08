@@ -12,9 +12,11 @@ import {
   HelpCircle,
   Search,
   User,
-  Heart
+  Heart,
+  LogOut
 } from "lucide-react";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 const adminNav = [
   { href: "/admin",           label: "Overview",  icon: LayoutDashboard, exact: true },
@@ -52,6 +54,26 @@ export function AdminShell({
   actions?: ReactNode;
 }) {
   const pathname = usePathname();
+  const [adminName, setAdminName] = useState<string>("Loading...");
+  const supabase = createSupabaseBrowserClient();
+
+  useEffect(() => {
+    async function loadUser() {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data?.user) {
+        setAdminName("Admin");
+        return;
+      }
+      const name = data.user.user_metadata?.full_name || data.user.email || "Curator";
+      setAdminName(name);
+    }
+    loadUser();
+  }, [supabase.auth]);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    window.location.href = "/login";
+  }
 
   return (
     <div className="flex min-h-screen" style={{ background: P.bgMain }}>
@@ -147,10 +169,17 @@ export function AdminShell({
           >
             <User className="h-4 w-4" style={{ color: P.textTitle }} />
           </div>
-          <div className="min-w-0">
-            <p className="text-xs font-bold truncate" style={{ color: P.textTitle }}>Admin Profile</p>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-bold truncate" style={{ color: P.textTitle }}>{adminName}</p>
             <p className="text-[10px] truncate" style={{ color: P.textBody }}>Curator</p>
           </div>
+          <button
+            onClick={handleLogout}
+            className="rounded-full p-2 hover:bg-[#F5E6E8] transition-colors"
+            title="Log out"
+          >
+            <LogOut className="h-4 w-4 text-danger transition hover:scale-110" style={{ color: P.danger }} />
+          </button>
         </div>
       </aside>
 
