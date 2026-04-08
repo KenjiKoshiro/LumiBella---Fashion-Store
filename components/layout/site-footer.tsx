@@ -1,7 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { brand } from "@/lib/constants";
+import { usePathname } from "next/navigation";
 
 export function SiteFooter() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <footer className="mt-20 border-t border-outline/10 bg-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:px-8">

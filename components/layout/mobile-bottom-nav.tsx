@@ -4,8 +4,13 @@ import Link from "next/link";
 import { Home, Search, ShoppingBag, UserRound } from "lucide-react";
 import { useStore } from "@/components/providers/store-provider";
 
+import { usePathname } from "next/navigation";
+
 export function MobileBottomNav() {
   const { cartCount } = useStore();
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <div className="fixed bottom-4 left-1/2 z-40 flex w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 items-center justify-between rounded-full border border-outline/15 bg-background/90 px-6 py-3 shadow-ambient md:hidden">
