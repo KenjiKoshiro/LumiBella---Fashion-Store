@@ -25,7 +25,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
       if (data.user) {
         const { data: adminUser } = await supabase
           .from("admin_users")
-          .select("id")
+          .select("user_id")
           .eq("user_id", data.user.id)
           .maybeSingle();
 

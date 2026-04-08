@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
   if (isAdmin && user) {
     const { data: adminUser } = await supabase
       .from("admin_users")
-      .select("id")
+      .select("user_id")
       .eq("user_id", user.id)
       .maybeSingle();
 
