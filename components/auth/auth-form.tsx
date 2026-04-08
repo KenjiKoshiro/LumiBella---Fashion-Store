@@ -15,8 +15,27 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
     event.preventDefault();
 
     if (mode === "login") {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      setMessage(error ? error.message : "Signed in successfully.");
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      
+      if (error) {
+        setMessage(error.message);
+        return;
+      }
+
+      if (data.user) {
+        const { data: adminUser } = await supabase
+          .from("admin_users")
+          .select("id")
+          .eq("user_id", data.user.id)
+          .maybeSingle();
+
+        // Redirect based on role
+        if (adminUser) {
+          window.location.href = "/admin";
+        } else {
+          window.location.href = "/account";
+        }
+      }
       return;
     }
 

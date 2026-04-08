@@ -38,13 +38,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // ─── DEV PREVIEW BYPASS ───────────────────────────────────────────────
-  // TODO: remove this block before deploying to production
-  if (process.env.NODE_ENV === "development" && isAdmin) {
-    return response;
-  }
-  // ──────────────────────────────────────────────────────────────────────
-
   if (isAdmin && user) {
     const { data: adminUser } = await supabase
       .from("admin_users")
