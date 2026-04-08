@@ -57,35 +57,7 @@ type SizeChartRow = {
   size_charts?: { product_id: string } | { product_id: string }[] | null;
 };
 
-function defaultPalette(categorySlug: string) {
-  switch (categorySlug) {
-    case "accessories":
-      return [
-        { name: "Pearl", hex: "#F2E7DD", image: placeholderFor(categorySlug) },
-        { name: "Noir", hex: "#2B2A30", image: placeholderFor(categorySlug) }
-      ];
-    case "activewear":
-      return [
-        { name: "Rosewater", hex: "#E8C4CC", image: placeholderFor(categorySlug) },
-        { name: "Mist", hex: "#DDE6E1", image: placeholderFor(categorySlug) }
-      ];
-    case "bottoms":
-      return [
-        { name: "Sand", hex: "#E7D8CC", image: placeholderFor(categorySlug) },
-        { name: "Graphite", hex: "#56545A", image: placeholderFor(categorySlug) }
-      ];
-    case "tops":
-      return [
-        { name: "Cloud", hex: "#F4F2EF", image: placeholderFor(categorySlug) },
-        { name: "Taupe", hex: "#C4B0A5", image: placeholderFor(categorySlug) }
-      ];
-    default:
-      return [
-        { name: "Rose Dust", hex: "#D8B4BE", image: placeholderFor(categorySlug) },
-        { name: "Champagne", hex: "#E8DEC7", image: placeholderFor(categorySlug) }
-      ];
-  }
-}
+
 
 function defaultSizes(categorySlug: string, freeSize = false) {
   if (freeSize || categorySlug === "accessories") return ["Free Size"];
@@ -178,14 +150,7 @@ function normalizeLegacyProduct(row: Record<string, any>, categoryMap: Map<strin
       : [primaryImage, look2, look3]
   );
 
-  const paletteBase = fallback?.colors ?? defaultPalette(categorySlug);
-  const colors = paletteBase.map((color, index) => ({
-    ...color,
-    image:
-      color.image ||
-      images[index] ||
-      primaryImage
-  }));
+
 
   return {
     id: String(row.id),
@@ -206,7 +171,6 @@ function normalizeLegacyProduct(row: Record<string, any>, categoryMap: Map<strin
     compareAtPrice: row.compare_at_price ? Number(row.compare_at_price) : null,
     rating: fallback?.rating ?? 4.7,
     reviewCount: fallback?.reviewCount ?? 24,
-    colors,
     sizes,
     freeSize,
     images,
@@ -296,20 +260,12 @@ async function fetchModernCatalog() {
 
   const variantsByProduct = new Map<
     string,
-    { colors: Product["colors"]; sizes: string[] }
+    { sizes: string[] }
   >();
 
   for (const row of (variantsRes.data ?? []) as ProductVariantRow[]) {
-    const current = variantsByProduct.get(row.product_id) ?? { colors: [], sizes: [] };
+    const current = variantsByProduct.get(row.product_id) ?? { sizes: [] };
     const productImages = imagesByProduct.get(row.product_id) ?? [];
-
-    if (row.color_name && !current.colors.some((color) => color.name === row.color_name)) {
-      current.colors.push({
-        name: row.color_name,
-        hex: row.color_hex ?? "#E5E7EB",
-        image: productImages[0] ?? placeholderFor("dresses")
-      });
-    }
 
     if (row.size_label && !current.sizes.includes(row.size_label)) {
       current.sizes.push(row.size_label);
@@ -353,15 +309,7 @@ async function fetchModernCatalog() {
 
     const primaryImage = images[0] ?? placeholderFor(categorySlug);
 
-    const colors = variantsByProduct.get(row.id)?.colors.length
-      ? variantsByProduct.get(row.id)!.colors.map((color, index) => ({
-          ...color,
-          image: color.image || images[index] || primaryImage
-        }))
-      : defaultPalette(categorySlug).map((color, index) => ({
-          ...color,
-          image: images[index] || primaryImage
-        }));
+
 
     return {
       id: row.id,
@@ -382,7 +330,6 @@ async function fetchModernCatalog() {
       compareAtPrice: row.compare_at_price ? Number(row.compare_at_price) : null,
       rating: Number(row.rating ?? 4.7),
       reviewCount: row.review_count ?? 0,
-      colors,
       sizes,
       freeSize,
       images,
