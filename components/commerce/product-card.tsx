@@ -8,7 +8,6 @@ import { formatCurrency } from "@/lib/utils";
 
 export function ProductCard({ product }: { product: Product }) {
   const hasDiscount = !!product.compareAtPrice && product.compareAtPrice > product.price;
-  const defaultColor = product.colors[0]?.name ?? "Default";
   const defaultSize = product.freeSize ? "Free Size" : product.sizes[0] ?? "One Size";
 
   return (
@@ -80,17 +79,7 @@ export function ProductCard({ product }: { product: Product }) {
           ) : null}
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex gap-2">
-            {product.colors.slice(0, 3).map((color) => (
-              <span
-                key={color.name}
-                className="h-5 w-5 rounded-full border border-outline/20"
-                style={{ backgroundColor: color.hex }}
-                title={color.name}
-              />
-            ))}
-          </div>
+        <div className="flex items-center justify-end">
           <div className="inline-flex items-center gap-1 rounded-full bg-secondary/55 px-2.5 py-1 text-xs font-semibold text-ink">
             <Sparkles className="h-3.5 w-3.5 text-primary" />
             {product.freeSize ? "Free Size" : product.sizes.join(" • ")}
@@ -101,7 +90,7 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="text-sm text-muted">{product.inventoryCount} in stock</span>
           <AddToCartButton
             product={product}
-            defaults={{ color: defaultColor, size: defaultSize }}
+            defaults={{ size: defaultSize }}
             compact
           />
         </div>

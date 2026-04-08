@@ -69,20 +69,6 @@ export const products: Product[] = [
     "compareAtPrice": 507.7,
     "rating": 4.9,
     "reviewCount": 31,
-    "colors": [
-      {
-        "name": "Sand",
-        "hex": "#E7D8CC"
-      },
-      {
-        "name": "Cocoa",
-        "hex": "#8C6D63"
-      },
-      {
-        "name": "Graphite",
-        "hex": "#55545A"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -91,11 +77,11 @@ export const products: Product[] = [
     ],
     "freeSize": false,
     "images": [
-      "/placeholders/product-1.svg",
+      "/images/product-1.png",
       "/placeholders/product-1b.svg",
       "/placeholders/product-1c.svg"
     ],
-    "primaryImage": "/placeholders/product-1.svg",
+    "primaryImage": "/images/product-1.png",
     "inventoryCount": 11,
     "newArrival": true,
     "bestSeller": false,
@@ -165,20 +151,6 @@ export const products: Product[] = [
     "compareAtPrice": 666.79,
     "rating": 4.8,
     "reviewCount": 44,
-    "colors": [
-      {
-        "name": "Sand",
-        "hex": "#E7D8CC"
-      },
-      {
-        "name": "Cocoa",
-        "hex": "#8C6D63"
-      },
-      {
-        "name": "Graphite",
-        "hex": "#55545A"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -261,20 +233,6 @@ export const products: Product[] = [
     "compareAtPrice": 1003.48,
     "rating": 4.7,
     "reviewCount": 57,
-    "colors": [
-      {
-        "name": "Sand",
-        "hex": "#E7D8CC"
-      },
-      {
-        "name": "Cocoa",
-        "hex": "#8C6D63"
-      },
-      {
-        "name": "Graphite",
-        "hex": "#55545A"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -357,20 +315,6 @@ export const products: Product[] = [
     "compareAtPrice": 939.9,
     "rating": 4.6,
     "reviewCount": 70,
-    "colors": [
-      {
-        "name": "Sand",
-        "hex": "#E7D8CC"
-      },
-      {
-        "name": "Cocoa",
-        "hex": "#8C6D63"
-      },
-      {
-        "name": "Graphite",
-        "hex": "#55545A"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -453,20 +397,6 @@ export const products: Product[] = [
     "compareAtPrice": 1535.46,
     "rating": 4.5,
     "reviewCount": 83,
-    "colors": [
-      {
-        "name": "Sand",
-        "hex": "#E7D8CC"
-      },
-      {
-        "name": "Cocoa",
-        "hex": "#8C6D63"
-      },
-      {
-        "name": "Graphite",
-        "hex": "#55545A"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -549,20 +479,6 @@ export const products: Product[] = [
     "compareAtPrice": 470.68,
     "rating": 4.4,
     "reviewCount": 96,
-    "colors": [
-      {
-        "name": "Sand",
-        "hex": "#E7D8CC"
-      },
-      {
-        "name": "Cocoa",
-        "hex": "#8C6D63"
-      },
-      {
-        "name": "Graphite",
-        "hex": "#55545A"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -645,20 +561,6 @@ export const products: Product[] = [
     "compareAtPrice": 1324.32,
     "rating": 4.3,
     "reviewCount": 109,
-    "colors": [
-      {
-        "name": "Sand",
-        "hex": "#E7D8CC"
-      },
-      {
-        "name": "Cocoa",
-        "hex": "#8C6D63"
-      },
-      {
-        "name": "Graphite",
-        "hex": "#55545A"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -741,12 +643,6 @@ export const products: Product[] = [
     "compareAtPrice": 735.51,
     "rating": 4.2,
     "reviewCount": 122,
-    "colors": [
-      {
-        "name": "Pearl",
-        "hex": "#F6EEE7"
-      }
-    ],
     "sizes": [
       "Free Size"
     ],
@@ -797,12 +693,6 @@ export const products: Product[] = [
     "compareAtPrice": 453.32,
     "rating": 4.9,
     "reviewCount": 135,
-    "colors": [
-      {
-        "name": "Pearl",
-        "hex": "#F6EEE7"
-      }
-    ],
     "sizes": [
       "Free Size"
     ],
@@ -853,12 +743,6 @@ export const products: Product[] = [
     "compareAtPrice": 536.56,
     "rating": 4.8,
     "reviewCount": 148,
-    "colors": [
-      {
-        "name": "Pearl",
-        "hex": "#F6EEE7"
-      }
-    ],
     "sizes": [
       "Free Size"
     ],
@@ -909,12 +793,6 @@ export const products: Product[] = [
     "compareAtPrice": 692.12,
     "rating": 4.7,
     "reviewCount": 161,
-    "colors": [
-      {
-        "name": "Pearl",
-        "hex": "#F6EEE7"
-      }
-    ],
     "sizes": [
       "Free Size"
     ],
@@ -965,12 +843,6 @@ export const products: Product[] = [
     "compareAtPrice": 577.8,
     "rating": 4.6,
     "reviewCount": 174,
-    "colors": [
-      {
-        "name": "Pearl",
-        "hex": "#F6EEE7"
-      }
-    ],
     "sizes": [
       "Free Size"
     ],
@@ -1021,12 +893,6 @@ export const products: Product[] = [
     "compareAtPrice": 907.21,
     "rating": 4.5,
     "reviewCount": 187,
-    "colors": [
-      {
-        "name": "Pearl",
-        "hex": "#F6EEE7"
-      }
-    ],
     "sizes": [
       "Free Size"
     ],
@@ -1077,12 +943,6 @@ export const products: Product[] = [
     "compareAtPrice": 575.69,
     "rating": 4.4,
     "reviewCount": 200,
-    "colors": [
-      {
-        "name": "Pearl",
-        "hex": "#F6EEE7"
-      }
-    ],
     "sizes": [
       "Free Size"
     ],
@@ -1133,20 +993,6 @@ export const products: Product[] = [
     "compareAtPrice": 1186.57,
     "rating": 4.3,
     "reviewCount": 213,
-    "colors": [
-      {
-        "name": "Rosewater",
-        "hex": "#E8C4CC"
-      },
-      {
-        "name": "Mist",
-        "hex": "#DDE6E1"
-      },
-      {
-        "name": "Ink",
-        "hex": "#333740"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -1229,20 +1075,6 @@ export const products: Product[] = [
     "compareAtPrice": 832.11,
     "rating": 4.2,
     "reviewCount": 226,
-    "colors": [
-      {
-        "name": "Rosewater",
-        "hex": "#E8C4CC"
-      },
-      {
-        "name": "Mist",
-        "hex": "#DDE6E1"
-      },
-      {
-        "name": "Ink",
-        "hex": "#333740"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -1325,20 +1157,6 @@ export const products: Product[] = [
     "compareAtPrice": 1237.71,
     "rating": 4.9,
     "reviewCount": 239,
-    "colors": [
-      {
-        "name": "Rosewater",
-        "hex": "#E8C4CC"
-      },
-      {
-        "name": "Mist",
-        "hex": "#DDE6E1"
-      },
-      {
-        "name": "Ink",
-        "hex": "#333740"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -1421,20 +1239,6 @@ export const products: Product[] = [
     "compareAtPrice": 863.9,
     "rating": 4.8,
     "reviewCount": 252,
-    "colors": [
-      {
-        "name": "Rosewater",
-        "hex": "#E8C4CC"
-      },
-      {
-        "name": "Mist",
-        "hex": "#DDE6E1"
-      },
-      {
-        "name": "Ink",
-        "hex": "#333740"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -1517,20 +1321,6 @@ export const products: Product[] = [
     "compareAtPrice": 533.59,
     "rating": 4.7,
     "reviewCount": 25,
-    "colors": [
-      {
-        "name": "Rosewater",
-        "hex": "#E8C4CC"
-      },
-      {
-        "name": "Mist",
-        "hex": "#DDE6E1"
-      },
-      {
-        "name": "Ink",
-        "hex": "#333740"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -1613,20 +1403,6 @@ export const products: Product[] = [
     "compareAtPrice": 958.55,
     "rating": 4.6,
     "reviewCount": 38,
-    "colors": [
-      {
-        "name": "Rosewater",
-        "hex": "#E8C4CC"
-      },
-      {
-        "name": "Mist",
-        "hex": "#DDE6E1"
-      },
-      {
-        "name": "Ink",
-        "hex": "#333740"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -1709,20 +1485,6 @@ export const products: Product[] = [
     "compareAtPrice": 1091.54,
     "rating": 4.5,
     "reviewCount": 51,
-    "colors": [
-      {
-        "name": "Rosewater",
-        "hex": "#E8C4CC"
-      },
-      {
-        "name": "Mist",
-        "hex": "#DDE6E1"
-      },
-      {
-        "name": "Ink",
-        "hex": "#333740"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -1805,20 +1567,6 @@ export const products: Product[] = [
     "compareAtPrice": 3232.26,
     "rating": 4.4,
     "reviewCount": 64,
-    "colors": [
-      {
-        "name": "Champagne",
-        "hex": "#E7D7BE"
-      },
-      {
-        "name": "Ruby",
-        "hex": "#8B475A"
-      },
-      {
-        "name": "Midnight",
-        "hex": "#2E2D39"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -1893,20 +1641,6 @@ export const products: Product[] = [
     "compareAtPrice": 4022.57,
     "rating": 4.3,
     "reviewCount": 77,
-    "colors": [
-      {
-        "name": "Champagne",
-        "hex": "#E7D7BE"
-      },
-      {
-        "name": "Ruby",
-        "hex": "#8B475A"
-      },
-      {
-        "name": "Midnight",
-        "hex": "#2E2D39"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -1981,20 +1715,6 @@ export const products: Product[] = [
     "compareAtPrice": 1319.86,
     "rating": 4.2,
     "reviewCount": 90,
-    "colors": [
-      {
-        "name": "Champagne",
-        "hex": "#E7D7BE"
-      },
-      {
-        "name": "Ruby",
-        "hex": "#8B475A"
-      },
-      {
-        "name": "Midnight",
-        "hex": "#2E2D39"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -2069,20 +1789,6 @@ export const products: Product[] = [
     "compareAtPrice": 1333.06,
     "rating": 4.9,
     "reviewCount": 103,
-    "colors": [
-      {
-        "name": "Champagne",
-        "hex": "#E7D7BE"
-      },
-      {
-        "name": "Ruby",
-        "hex": "#8B475A"
-      },
-      {
-        "name": "Midnight",
-        "hex": "#2E2D39"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -2157,20 +1863,6 @@ export const products: Product[] = [
     "compareAtPrice": 1688.35,
     "rating": 4.8,
     "reviewCount": 116,
-    "colors": [
-      {
-        "name": "Champagne",
-        "hex": "#E7D7BE"
-      },
-      {
-        "name": "Ruby",
-        "hex": "#8B475A"
-      },
-      {
-        "name": "Midnight",
-        "hex": "#2E2D39"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -2245,20 +1937,6 @@ export const products: Product[] = [
     "compareAtPrice": 1351.1,
     "rating": 4.7,
     "reviewCount": 129,
-    "colors": [
-      {
-        "name": "Champagne",
-        "hex": "#E7D7BE"
-      },
-      {
-        "name": "Ruby",
-        "hex": "#8B475A"
-      },
-      {
-        "name": "Midnight",
-        "hex": "#2E2D39"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -2333,20 +2011,6 @@ export const products: Product[] = [
     "compareAtPrice": 3174.41,
     "rating": 4.6,
     "reviewCount": 142,
-    "colors": [
-      {
-        "name": "Champagne",
-        "hex": "#E7D7BE"
-      },
-      {
-        "name": "Ruby",
-        "hex": "#8B475A"
-      },
-      {
-        "name": "Midnight",
-        "hex": "#2E2D39"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -2421,20 +2085,6 @@ export const products: Product[] = [
     "compareAtPrice": 3651.67,
     "rating": 4.5,
     "reviewCount": 155,
-    "colors": [
-      {
-        "name": "Rose Dust",
-        "hex": "#D9B8BE"
-      },
-      {
-        "name": "Ivory",
-        "hex": "#F5EFE6"
-      },
-      {
-        "name": "Black Cherry",
-        "hex": "#5A3943"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -2517,20 +2167,6 @@ export const products: Product[] = [
     "compareAtPrice": 1219.04,
     "rating": 4.4,
     "reviewCount": 168,
-    "colors": [
-      {
-        "name": "Rose Dust",
-        "hex": "#D9B8BE"
-      },
-      {
-        "name": "Ivory",
-        "hex": "#F5EFE6"
-      },
-      {
-        "name": "Black Cherry",
-        "hex": "#5A3943"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -2613,20 +2249,6 @@ export const products: Product[] = [
     "compareAtPrice": 2071.56,
     "rating": 4.3,
     "reviewCount": 181,
-    "colors": [
-      {
-        "name": "Rose Dust",
-        "hex": "#D9B8BE"
-      },
-      {
-        "name": "Ivory",
-        "hex": "#F5EFE6"
-      },
-      {
-        "name": "Black Cherry",
-        "hex": "#5A3943"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -2709,20 +2331,6 @@ export const products: Product[] = [
     "compareAtPrice": 4173.97,
     "rating": 4.2,
     "reviewCount": 194,
-    "colors": [
-      {
-        "name": "Rose Dust",
-        "hex": "#D9B8BE"
-      },
-      {
-        "name": "Ivory",
-        "hex": "#F5EFE6"
-      },
-      {
-        "name": "Black Cherry",
-        "hex": "#5A3943"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -2805,20 +2413,6 @@ export const products: Product[] = [
     "compareAtPrice": 1883.34,
     "rating": 4.9,
     "reviewCount": 207,
-    "colors": [
-      {
-        "name": "Rose Dust",
-        "hex": "#D9B8BE"
-      },
-      {
-        "name": "Ivory",
-        "hex": "#F5EFE6"
-      },
-      {
-        "name": "Black Cherry",
-        "hex": "#5A3943"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -2901,20 +2495,6 @@ export const products: Product[] = [
     "compareAtPrice": 2954.9,
     "rating": 4.8,
     "reviewCount": 220,
-    "colors": [
-      {
-        "name": "Rose Dust",
-        "hex": "#D9B8BE"
-      },
-      {
-        "name": "Ivory",
-        "hex": "#F5EFE6"
-      },
-      {
-        "name": "Black Cherry",
-        "hex": "#5A3943"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -2997,20 +2577,6 @@ export const products: Product[] = [
     "compareAtPrice": 2071.01,
     "rating": 4.7,
     "reviewCount": 233,
-    "colors": [
-      {
-        "name": "Rose Dust",
-        "hex": "#D9B8BE"
-      },
-      {
-        "name": "Ivory",
-        "hex": "#F5EFE6"
-      },
-      {
-        "name": "Black Cherry",
-        "hex": "#5A3943"
-      }
-    ],
     "sizes": [
       "XS",
       "S",
@@ -3093,20 +2659,6 @@ export const products: Product[] = [
     "compareAtPrice": 877.28,
     "rating": 4.6,
     "reviewCount": 246,
-    "colors": [
-      {
-        "name": "Cloud",
-        "hex": "#F5F4F2"
-      },
-      {
-        "name": "Taupe",
-        "hex": "#BDA79D"
-      },
-      {
-        "name": "Lavender",
-        "hex": "#D9CBE8"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -3181,20 +2733,6 @@ export const products: Product[] = [
     "compareAtPrice": 802.18,
     "rating": 4.5,
     "reviewCount": 19,
-    "colors": [
-      {
-        "name": "Cloud",
-        "hex": "#F5F4F2"
-      },
-      {
-        "name": "Taupe",
-        "hex": "#BDA79D"
-      },
-      {
-        "name": "Lavender",
-        "hex": "#D9CBE8"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -3269,20 +2807,6 @@ export const products: Product[] = [
     "compareAtPrice": 1195.45,
     "rating": 4.4,
     "reviewCount": 32,
-    "colors": [
-      {
-        "name": "Cloud",
-        "hex": "#F5F4F2"
-      },
-      {
-        "name": "Taupe",
-        "hex": "#BDA79D"
-      },
-      {
-        "name": "Lavender",
-        "hex": "#D9CBE8"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -3357,20 +2881,6 @@ export const products: Product[] = [
     "compareAtPrice": 878.4,
     "rating": 4.3,
     "reviewCount": 45,
-    "colors": [
-      {
-        "name": "Cloud",
-        "hex": "#F5F4F2"
-      },
-      {
-        "name": "Taupe",
-        "hex": "#BDA79D"
-      },
-      {
-        "name": "Lavender",
-        "hex": "#D9CBE8"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -3445,20 +2955,6 @@ export const products: Product[] = [
     "compareAtPrice": 1015.59,
     "rating": 4.2,
     "reviewCount": 58,
-    "colors": [
-      {
-        "name": "Cloud",
-        "hex": "#F5F4F2"
-      },
-      {
-        "name": "Taupe",
-        "hex": "#BDA79D"
-      },
-      {
-        "name": "Lavender",
-        "hex": "#D9CBE8"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -3533,20 +3029,6 @@ export const products: Product[] = [
     "compareAtPrice": 666.75,
     "rating": 4.9,
     "reviewCount": 71,
-    "colors": [
-      {
-        "name": "Cloud",
-        "hex": "#F5F4F2"
-      },
-      {
-        "name": "Taupe",
-        "hex": "#BDA79D"
-      },
-      {
-        "name": "Lavender",
-        "hex": "#D9CBE8"
-      }
-    ],
     "sizes": [
       "S",
       "M",
@@ -3621,20 +3103,6 @@ export const products: Product[] = [
     "compareAtPrice": 1104.99,
     "rating": 4.8,
     "reviewCount": 84,
-    "colors": [
-      {
-        "name": "Cloud",
-        "hex": "#F5F4F2"
-      },
-      {
-        "name": "Taupe",
-        "hex": "#BDA79D"
-      },
-      {
-        "name": "Lavender",
-        "hex": "#D9CBE8"
-      }
-    ],
     "sizes": [
       "S",
       "M",

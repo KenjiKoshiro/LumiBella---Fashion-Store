@@ -9,10 +9,6 @@ export type Category = {
   image: string;
 };
 
-export type ColorOption = {
-  name: string;
-  hex: string;
-};
 
 export type SizeChartRule = {
   label: string;
@@ -20,12 +16,6 @@ export type SizeChartRule = {
   heightMax: number;
   weightMin: number;
   weightMax: number;
-};
-
-export type ProductColor = {
-  name: string;
-  hex: string;
-  image?: string;
 };
 
 export type Product = {
@@ -44,7 +34,6 @@ export type Product = {
   inventoryCount: number;
   freeSize: boolean;
   sizes: string[];
-  colors: ProductColor[];
   images: string[];
   categoryId?: string | null;
   categorySlug: string;
@@ -73,7 +62,6 @@ export type CartItem = {
   name: string;
   image: string;
   price: number;
-  color: string;
   size: string;
   quantity: number;
 };

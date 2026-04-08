@@ -81,10 +81,10 @@ export function CheckoutPageClient() {
         <h2 className="font-headline text-2xl font-bold">Review order</h2>
         <div className="mt-5 space-y-3">
           {state.cart.map((item) => (
-            <div key={`${item.slug}-${item.color}-${item.size}`} className="flex items-center justify-between gap-4 text-sm">
+            <div key={`${item.slug}-${item.size}`} className="flex items-center justify-between gap-4 text-sm">
               <div>
                 <p className="font-semibold">{item.name}</p>
-                <p className="text-muted">{item.color} • {item.size} • Qty {item.quantity}</p>
+                <p className="text-muted">{item.size} • Qty {item.quantity}</p>
               </div>
               <span>{formatCurrency(item.price * item.quantity)}</span>
             </div>

@@ -17,8 +17,8 @@ type StoreState = {
 
 type StoreAction =
   | { type: "ADD_TO_CART"; payload: CartItem }
-  | { type: "REMOVE_FROM_CART"; payload: { slug: string; color: string; size: string } }
-  | { type: "UPDATE_QUANTITY"; payload: { slug: string; color: string; size: string; quantity: number } }
+  | { type: "REMOVE_FROM_CART"; payload: { slug: string; size: string } }
+  | { type: "UPDATE_QUANTITY"; payload: { slug: string; size: string; quantity: number } }
   | { type: "CLEAR_CART" }
   | { type: "TOGGLE_WISHLIST"; payload: WishlistItem }
   | { type: "HYDRATE"; payload: StoreState };
@@ -34,7 +34,6 @@ function reducer(state: StoreState, action: StoreAction): StoreState {
       const existingIndex = state.cart.findIndex(
         (item) =>
           item.slug === action.payload.slug &&
-          item.color === action.payload.color &&
           item.size === action.payload.size
       );
 
@@ -56,7 +55,6 @@ function reducer(state: StoreState, action: StoreAction): StoreState {
           (item) =>
             !(
               item.slug === action.payload.slug &&
-              item.color === action.payload.color &&
               item.size === action.payload.size
             )
         )
@@ -66,7 +64,6 @@ function reducer(state: StoreState, action: StoreAction): StoreState {
         ...state,
         cart: state.cart.map((item) =>
           item.slug === action.payload.slug &&
-          item.color === action.payload.color &&
           item.size === action.payload.size
             ? { ...item, quantity: Math.max(1, action.payload.quantity) }
             : item
@@ -95,8 +92,8 @@ type StoreContextValue = {
   cartCount: number;
   wishlistCount: number;
   addToCart: (item: CartItem) => void;
-  removeFromCart: (slug: string, color: string, size: string) => void;
-  updateQuantity: (slug: string, color: string, size: string, quantity: number) => void;
+  removeFromCart: (slug: string, size: string) => void;
+  updateQuantity: (slug: string, size: string, quantity: number) => void;
   clearCart: () => void;
   toggleWishlist: (item: WishlistItem) => void;
 };
@@ -123,10 +120,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       cartCount: state.cart.reduce((sum, item) => sum + item.quantity, 0),
       wishlistCount: state.wishlist.length,
       addToCart: (item) => dispatch({ type: "ADD_TO_CART", payload: item }),
-      removeFromCart: (slug, color, size) =>
-        dispatch({ type: "REMOVE_FROM_CART", payload: { slug, color, size } }),
-      updateQuantity: (slug, color, size, quantity) =>
-        dispatch({ type: "UPDATE_QUANTITY", payload: { slug, color, size, quantity } }),
+      removeFromCart: (slug, size) =>
+        dispatch({ type: "REMOVE_FROM_CART", payload: { slug, size } }),
+      updateQuantity: (slug, size, quantity) =>
+        dispatch({ type: "UPDATE_QUANTITY", payload: { slug, size, quantity } }),
       clearCart: () => dispatch({ type: "CLEAR_CART" }),
       toggleWishlist: (item) => dispatch({ type: "TOGGLE_WISHLIST", payload: item })
     }),

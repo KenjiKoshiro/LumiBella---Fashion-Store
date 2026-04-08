@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 type Props = {
   product: Product;
   defaults: {
-    color: string;
     size: string;
     quantity?: number;
   };
@@ -30,7 +29,6 @@ export function AddToCartButton({ product, defaults, compact = false }: Props) {
           name: product.name,
           image: product.primaryImage,
           price: product.price,
-          color: defaults.color,
           size: defaults.size,
           quantity: defaults.quantity ?? 1
         })

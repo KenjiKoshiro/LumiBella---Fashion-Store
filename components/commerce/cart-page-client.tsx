@@ -29,12 +29,12 @@ export function CartPageClient() {
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
       <div className="space-y-4">
         {state.cart.map((item) => (
-          <div key={`${item.slug}-${item.color}-${item.size}`} className="flex gap-4 rounded-[28px] bg-surface-card p-4 shadow-ambient">
+          <div key={`${item.slug}-${item.size}`} className="flex gap-4 rounded-[28px] bg-surface-card p-4 shadow-ambient">
             <Image src={item.image} alt={item.name} width={120} height={150} className="h-[150px] w-[120px] rounded-[20px] object-cover" />
             <div className="flex flex-1 flex-col justify-between">
               <div>
                 <h3 className="font-headline text-lg font-bold">{item.name}</h3>
-                <p className="mt-2 text-sm text-muted">{item.color} • {item.size}</p>
+                <p className="mt-2 text-sm text-muted">{item.size}</p>
                 <p className="mt-3 font-headline text-lg font-bold text-primary">{formatCurrency(item.price)}</p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
@@ -42,10 +42,10 @@ export function CartPageClient() {
                   type="number"
                   min={1}
                   value={item.quantity}
-                  onChange={(event) => updateQuantity(item.slug, item.color, item.size, Number(event.target.value))}
+                  onChange={(event) => updateQuantity(item.slug, item.size, Number(event.target.value))}
                   className="w-20 rounded-full bg-surface-low px-4 py-2 outline-none"
                 />
-                <button onClick={() => removeFromCart(item.slug, item.color, item.size)} className="text-sm font-semibold text-primary">Remove</button>
+                <button onClick={() => removeFromCart(item.slug, item.size)} className="text-sm font-semibold text-primary">Remove</button>
                 <button className="text-sm font-semibold text-muted">Save for later</button>
               </div>
             </div>

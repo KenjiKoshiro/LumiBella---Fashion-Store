@@ -19,23 +19,15 @@ export function ProductDetailClient({
   product: Product;
   relatedProducts: Product[];
 }) {
-  const initialColor = product.colors?.[0] ?? null;
   const initialSize = product.freeSize ? "Free Size" : product.sizes?.[0] ?? "";
-  const initialImage = initialColor?.image || product.images?.[0] || "";
+  const initialImage = product.images?.[0] || "";
 
-  const [selectedColor, setSelectedColor] = useState(initialColor);
   const [selectedSize, setSelectedSize] = useState(initialSize);
   const [selectedImage, setSelectedImage] = useState(initialImage);
 
   const galleryImages = useMemo(() => {
-    const baseImages = product.images || [];
-    if (!selectedColor?.image) return baseImages;
-
-    return [
-      selectedColor.image,
-      ...baseImages.filter((img) => img !== selectedColor.image)
-    ];
-  }, [product.images, selectedColor]);
+    return product.images || [];
+  }, [product.images]);
 
   return (
     <div className="space-y-16">
@@ -75,45 +67,6 @@ export function ProductDetailClient({
           </div>
 
           <div className="rounded-[28px] bg-surface-low p-5">
-            <p className="text-sm text-muted">Color</p>
-            <div className="mt-3 flex flex-wrap gap-3">
-              {product.colors.map((color) => {
-                const active = selectedColor?.name === color.name;
-
-                return (
-                  <motion.button
-                    key={color.name}
-                    type="button"
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => {
-                      setSelectedColor(color);
-                      setSelectedImage(color.image || product.primaryImage);
-                    }}
-                    className={`relative flex items-center gap-3 rounded-full px-4 py-2 text-sm font-semibold transition ${
-                      active
-                        ? "bg-white border border-primary shadow-sm"
-                        : "bg-white border border-outline/10 hover:border-primary/40"
-                    }`}
-                  >
-                    <span
-                      className="h-5 w-5 rounded-full border border-outline/20"
-                      style={{ backgroundColor: color.hex }}
-                    />
-                    {color.name}
-
-                    {active ? (
-                      <motion.span
-                        layoutId="activeColorOutline"
-                        className="absolute inset-0 rounded-full ring-2 ring-primary/20"
-                      />
-                    ) : null}
-                  </motion.button>
-                );
-              })}
-            </div>
-
-            <p className="mt-5 text-sm text-muted">Size</p>
             <div className="mt-3 flex flex-wrap gap-3">
               {(product.freeSize ? ["Free Size"] : product.sizes).map((size) => {
                 const active = selectedSize === size;
@@ -148,7 +101,6 @@ export function ProductDetailClient({
               <AddToCartButton
                 product={product}
                 defaults={{
-                  color: selectedColor?.name ?? "Default",
                   size:
                     selectedSize ||
                     (product.freeSize ? "Free Size" : product.sizes[0] ?? "One Size")
