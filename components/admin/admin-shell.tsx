@@ -37,7 +37,8 @@ const P = {
   textBody:   "#7A6A6A",       // Body text
   shadow:     "0 4px 24px rgba(248,200,220,0.3)", // Soft pink shadow
   border:     "rgba(244,166,184,0.15)",
-  muted:      "#A89B9B"
+  muted:      "#A89B9B",
+  danger:     "#E4A1A1"
 };
 
 export function AdminShell({
