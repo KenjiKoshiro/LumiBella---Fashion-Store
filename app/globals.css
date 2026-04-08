@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-ink font-body;
+}
+
+a {
+  @apply transition-colors;
+}
+
+input,
+select,
+textarea {
+  @apply text-ink;
+}
+
+::selection {
+  @apply bg-blush text-ink;
+}

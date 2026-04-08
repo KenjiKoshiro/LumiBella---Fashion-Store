@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: lumibelle-worker
+    env: node
+    rootDir: render-worker
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    autoDeploy: true
+    plan: starter
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: RENDER_INTERNAL_API_KEY
+        sync: false

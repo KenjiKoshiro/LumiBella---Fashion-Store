@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3d9df"/>
+      <stop offset="100%" stop-color="#f8f3eb"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" rx="48" fill="url(#g)"/>
+  <circle cx="980" cy="220" r="180" fill="white" fill-opacity="0.16"/>
+  <circle cx="210" cy="1220" r="240" fill="white" fill-opacity="0.12"/>
+  <rect x="90" y="980" width="1020" height="330" rx="36" fill="white" fill-opacity="0.68"/>
+  <text x="120" y="1085" fill="#80525a" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" letter-spacing="8">LUMIBELLE</text>
+  <text x="120" y="1165" fill="#303330" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">Social 1</text>
+  <text x="120" y="1235" fill="#5d605c" font-family="Arial, Helvetica, sans-serif" font-size="34">Instagram-style brand tile</text>
+</svg>
