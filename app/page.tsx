@@ -52,11 +52,23 @@ export default async function HomePage() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="overflow-hidden rounded-[32px] bg-surface-low">
-            <Image src="/placeholders/hero-main.svg" alt="LumiBelle hero" width={900} height={1100} className="h-full w-full object-cover" />
+            <Image 
+              src="https://wzuxnpxkpbjgotnccoav.supabase.co/storage/v1/object/public/images/Motion%20Fit%20Set.webp" 
+              alt="LumiBelle seasonal feature" 
+              width={900} 
+              height={1100} 
+              className="h-full w-full object-cover transition duration-700 hover:scale-105" 
+            />
           </div>
           <div className="flex flex-col gap-4">
             <div className="overflow-hidden rounded-[32px] bg-surface-low">
-              <Image src="/placeholders/hero-secondary.svg" alt="LumiBelle secondary hero" width={900} height={520} className="h-full w-full object-cover" />
+              <Image 
+                src="https://wzuxnpxkpbjgotnccoav.supabase.co/storage/v1/object/public/images/Blush%20Midi%20Dress.webp" 
+                alt="LumiBelle trending pieces" 
+                width={900} 
+                height={520} 
+                className="h-full w-full object-cover transition duration-700 hover:scale-105" 
+              />
             </div>
             <div className="rounded-[32px] bg-secondary/45 p-6">
               <p className="font-headline text-lg font-bold text-ink">Conversion-friendly updates</p>

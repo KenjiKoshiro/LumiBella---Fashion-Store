@@ -9,6 +9,7 @@ import {
   searchProducts as searchFallbackProducts
 } from "@/lib/mock-data";
 import { titleCase } from "@/lib/utils";
+import { getStoragePublicUrl } from "@/lib/supabase/storage";
 
 type ModernProductRow = {
   id: string;
@@ -145,11 +146,12 @@ function normalizeLegacyProduct(row: Record<string, any>, categoryMap: Map<strin
     fallback?.images?.[2] ||
     primaryImage;
 
-  const images = uniqueStrings(
-    fallback?.images?.length
-      ? fallback.images
-      : [primaryImage, look2, look3]
-  );
+  const images = (fallback?.images?.length
+    ? fallback.images
+    : [primaryImage, look2, look3]
+  ).map((img: string) => getStoragePublicUrl(img));
+
+  const finalPrimaryImage = images[0] ?? placeholderFor(categorySlug);
 
 
 
@@ -185,8 +187,8 @@ function normalizeLegacyProduct(row: Record<string, any>, categoryMap: Map<strin
     status: row.is_active === false ? "draft" : "active",
     sizeChart: fallback?.sizeChart ?? defaultSizeChart(sizes),
     relatedSlugs: [],
-    sourceImageUrl: row.image_url ?? fallback?.sourceImageUrl ?? null,
-    imageAuditStatus: fallback?.imageAuditStatus ?? (row.image_url ? "unknown" : "placeholder")
+    sourceImageUrl: finalPrimaryImage,
+    imageAuditStatus: fallback?.imageAuditStatus ?? (row.image_url ? "ok" : "placeholder")
   };
 }
 
@@ -195,11 +197,14 @@ async function fetchModernCatalog() {
 
   const { data: categoryRows, error: categoryError } = await supabase
     .from("categories")
-    .select("id, slug, name, description")
+    .select("id, slug, name, description, image")
     .eq("is_active", true)
     .order("sort_order", { ascending: true });
-
-  if (categoryError) throw categoryError;
+  if (categoryError) {
+    console.error("❌ Supabase Category Error:", categoryError);
+    throw categoryError;
+  }
+  console.log(`✅ Found ${categoryRows?.length || 0} categories in Supabase`);
 
   const categoryMap = new Map<string, Category>(
     (categoryRows ?? []).map((row) => [
@@ -209,7 +214,7 @@ async function fetchModernCatalog() {
         slug: row.slug,
         name: row.name,
         description: row.description ?? "",
-        image: getFallbackCategoryBySlug(row.slug)?.image ?? placeholderFor(row.slug)
+        image: row.image || getFallbackCategoryBySlug(row.slug)?.image || placeholderFor(row.slug)
       }
     ])
   );
@@ -222,10 +227,15 @@ async function fetchModernCatalog() {
     .eq("status", "active")
     .order("created_at", { ascending: false });
 
-  if (productError) throw productError;
+  if (productError) {
+    console.error("❌ Supabase Product Error:", productError);
+    throw productError;
+  }
+  console.log(`✅ Found ${productRows?.length || 0} products in Supabase`);
 
   const ids = (productRows ?? []).map((row) => row.id);
 
+  console.log("🔍 Fetching images/variants/rules for products...");
   const [imagesRes, variantsRes, sizeChartRes] = await Promise.all([
     ids.length
       ? supabase
@@ -247,9 +257,14 @@ async function fetchModernCatalog() {
       : Promise.resolve({ data: [], error: null })
   ]);
 
-  if (imagesRes.error) throw imagesRes.error;
-  if (variantsRes.error) throw variantsRes.error;
-  if (sizeChartRes.error) throw sizeChartRes.error;
+  if (imagesRes.error) {
+    console.error("❌ Supabase Image Error:", imagesRes.error);
+    throw imagesRes.error;
+  }
+  console.log(`✅ Found ${imagesRes.data?.length || 0} image relations in Supabase`);
+  
+  if (variantsRes.error) console.warn("⚠️ Variants error:", variantsRes.error);
+  if (sizeChartRes.error) console.warn("⚠️ Size chart error:", sizeChartRes.error);
 
   const imagesByProduct = new Map<string, string[]>();
 
@@ -304,11 +319,12 @@ async function fetchModernCatalog() {
       ? variantsByProduct.get(row.id)!.sizes
       : defaultSizes(categorySlug, freeSize);
 
-    const images = imagesByProduct.get(row.id)?.length
-      ? imagesByProduct.get(row.id)!
+    const rawImages = imagesByProduct.get(row.id) ?? [];
+    const images = rawImages.length 
+      ? rawImages.map(path => getStoragePublicUrl(path))
       : [placeholderFor(categorySlug)];
 
-    const primaryImage = images[0] ?? placeholderFor(categorySlug);
+    const primaryImage = images[0];
 
 
 
