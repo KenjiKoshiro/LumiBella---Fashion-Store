@@ -5,6 +5,8 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { StoreProvider } from "@/components/providers/store-provider";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "LumiBelle",
   description: "Premium-accessible fashion storefront built with Next.js, Supabase, and Render."

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { Category, Product, SizeChartRule } from "@/lib/types";
 import {
@@ -391,20 +392,20 @@ async function fetchLegacyCatalog() {
   };
 }
 
-async function getCatalog() {
+const getCatalog = cache(async () => {
   try {
     return await fetchModernCatalog();
   } catch {
     try {
       return await fetchLegacyCatalog();
-    } catch {
-      return {
-        categories: fallbackCategories,
-        products: fallbackProducts
-      };
+    } catch (err) {
+      throw new Error(
+        "LumiBelle store is temporarily unavailable. Please try again shortly.",
+        { cause: err }
+      );
     }
   }
-}
+});
 
 export async function getCategories() {
   return (await getCatalog()).categories;
