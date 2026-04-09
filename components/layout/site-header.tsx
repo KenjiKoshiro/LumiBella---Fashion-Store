@@ -6,6 +6,7 @@ import { Heart, Search, ShoppingBag, UserRound, Menu, X } from "lucide-react";
 import { brand, navigation } from "@/lib/constants";
 import { useStore } from "@/components/providers/store-provider";
 import { useState, useEffect } from "react";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 export function SiteHeader() {
   const { cartCount, wishlistCount } = useStore();
