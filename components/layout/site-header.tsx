@@ -13,6 +13,8 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [userMetadata, setUserMetadata] = useState<any>(null);
+  const supabase = createSupabaseBrowserClient();
 
   // Subtle blur and shadow on scroll
   useEffect(() => {
@@ -39,6 +41,23 @@ export function SiteHeader() {
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
+
+  // Load user metadata for the login indicator
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUserMetadata(data?.user?.user_metadata || null);
+    };
+
+    fetchUser();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserMetadata(session?.user?.user_metadata || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase.auth]);
 
   if (pathname.startsWith("/admin")) return null;
 
@@ -127,9 +146,19 @@ export function SiteHeader() {
             
             <Link
               href="/account"
-              className="hidden md:flex group relative rounded-full p-2.5 transition-all duration-300 hover:bg-primary/5"
+              className="hidden md:flex group relative rounded-full h-10 w-10 items-center justify-center transition-all duration-300 hover:bg-primary/5"
             >
-              <UserRound className="h-[22px] w-[22px] text-ink/80 transition-all duration-300 group-hover:scale-110 group-hover:text-primary" />
+              {userMetadata?.avatar_url ? (
+                <div className="relative h-[28px] w-[28px] overflow-hidden rounded-full ring-2 ring-transparent transition-all duration-300 group-hover:ring-primary/20">
+                  <img src={userMetadata.avatar_url} alt="Profile" className="h-full w-full object-cover" />
+                </div>
+              ) : userMetadata?.full_name || userMetadata?.email ? (
+                <div className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-primary/10 text-[11px] font-bold text-primary transition-all duration-300 group-hover:bg-primary/20">
+                  {(userMetadata.full_name || userMetadata.email || "U")[0].toUpperCase()}
+                </div>
+              ) : (
+                <UserRound className="h-[22px] w-[22px] text-ink/80 transition-all duration-300 group-hover:scale-110 group-hover:text-primary" />
+              )}
             </Link>
 
             <Link
@@ -223,10 +252,14 @@ export function SiteHeader() {
               href="/account"
               className="flex items-center gap-3 text-sm font-bold text-ink/70 hover:text-primary transition-colors"
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/5">
-                <UserRound className="h-4 w-4 text-primary" />
+              <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-primary/5">
+                {userMetadata?.avatar_url ? (
+                  <img src={userMetadata.avatar_url} alt="Profile" className="h-full w-full object-cover" />
+                ) : (
+                  <UserRound className="h-4 w-4 text-primary" />
+                )}
               </div>
-              My Account
+              {userMetadata?.full_name || "My Account"}
             </Link>
           </div>
         </div>
