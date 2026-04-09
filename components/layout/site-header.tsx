@@ -65,9 +65,9 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-500 ${
+        className={`sticky top-0 z-50 spring-transition ${
           isScrolled
-            ? "border-b border-primary/5 bg-white/80 shadow-ambient backdrop-blur-xl py-2"
+            ? "border-b border-primary/5 bg-white/70 shadow-ambient backdrop-blur-xl py-2"
             : "border-b border-transparent bg-background py-4"
         }`}
       >
@@ -98,14 +98,14 @@ export function SiteHeader() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="group relative px-4 py-2 font-headline text-[13px] font-bold tracking-wide transition-colors duration-300"
+                    className="group relative px-4 py-2 font-headline text-[13px] font-bold tracking-wide transition-all duration-500"
                   >
-                    <span className={`relative z-10 ${isActive ? "text-primary" : "text-ink/75 group-hover:text-primary"}`}>
+                    <span className={`relative z-10 spring-transition ${isActive ? "text-primary" : "text-ink/75 group-hover:text-primary group-hover:scale-105"}`}>
                       {item.label}
                     </span>
                     {/* Animated Pill Active/Hover State */}
                     <span
-                      className={`absolute inset-0 -z-10 rounded-full transition-all duration-300 ease-out ${
+                      className={`absolute inset-0 -z-10 rounded-full spring-transition ${
                         isActive
                           ? "scale-100 bg-primary/10 opacity-100"
                           : "scale-90 bg-primary/5 opacity-0 group-hover:scale-100 group-hover:opacity-100"
@@ -164,11 +164,11 @@ export function SiteHeader() {
 
             <Link
               href="/cart"
-              className="group relative rounded-full p-2.5 transition-all duration-300 hover:bg-primary/5"
+              className="group relative rounded-full p-2.5 spring-transition hover:bg-primary/5 active:scale-90"
             >
-              <ShoppingBag className="h-[22px] w-[22px] text-ink/80 transition-all duration-300 group-hover:scale-110 group-hover:text-primary" />
+              <ShoppingBag className="h-[22px] w-[22px] text-ink/80 spring-transition group-hover:scale-110 group-hover:text-primary" />
               {cartCount > 0 && (
-                <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#fec2cb] text-[10px] font-bold text-[#80525a] shadow-[0_2px_4px_rgba(254,194,203,0.4)] animate-in zoom-in">
+                <span className="absolute right-1 top-1 flex h-4 w-4 animate-pulse items-center justify-center rounded-full bg-blush text-[10px] font-bold text-primary shadow-[0_2px_8px_rgba(254,194,203,0.6)]">
                   {cartCount}
                 </span>
               )}

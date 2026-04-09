@@ -11,7 +11,7 @@ export function ProductCard({ product }: { product: Product }) {
   const defaultSize = product.freeSize ? "Free Size" : product.sizes[0] ?? "One Size";
 
   return (
-    <article className="group overflow-hidden rounded-[30px] border border-outline/10 bg-white shadow-ambient transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_60px_rgba(48,51,48,0.12)]">
+    <article className="group relative overflow-hidden rounded-[32px] border border-outline/10 bg-white shadow-ambient spring-transition hover:-translate-y-2 hover:shadow-[0_22px_70px_rgba(48,51,48,0.15)]">
       <div className="relative">
         <Link href={`/product/${product.slug}`} className="block overflow-hidden bg-surface-low">
           <Image
@@ -23,19 +23,20 @@ export function ProductCard({ product }: { product: Product }) {
           />
         </Link>
 
-        <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+        <div className="absolute left-3 top-3 flex flex-wrap gap-2">
           {product.newArrival ? (
-            <span className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
+            <span className="flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-primary shadow-sm backdrop-blur-md">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
               New
             </span>
           ) : null}
           {hasDiscount ? (
-            <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
+            <span className="rounded-full bg-primary/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm backdrop-blur-md">
               Sale
             </span>
           ) : null}
-          {product.inventoryCount <= 8 ? (
-            <span className="rounded-full bg-tertiary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink">
+          {product.inventoryCount <= 8 && product.inventoryCount > 0 ? (
+            <span className="rounded-full bg-tertiary/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-ink shadow-sm backdrop-blur-md">
               Low stock
             </span>
           ) : null}

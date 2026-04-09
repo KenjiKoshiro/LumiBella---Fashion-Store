@@ -34,7 +34,7 @@ export function AddToCartButton({ product, defaults, compact = false }: Props) {
         })
       }
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 font-headline text-sm font-semibold text-white transition hover:opacity-90",
+        "btn-pro inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 font-headline text-sm font-bold text-white shadow-sm hover:shadow-md hover:brightness-110",
         compact && "px-4 py-2"
       )}
     >
