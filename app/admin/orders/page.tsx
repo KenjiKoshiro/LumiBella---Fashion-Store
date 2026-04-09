@@ -9,7 +9,7 @@ const orders = [
     id: "#ORD-8829",
     customer: "Juliana Moretti",
     items: 3,
-    total: "$1,240.00",
+    total: "฿12,400.00",
     date: "TODAY, 2:41 PM",
     status: "Processing",
     detail: {
@@ -17,15 +17,15 @@ const orders = [
       email: "juliana@example.com",
       shipping: "18 Rue de la Paix, Paris, 75001, France",
       method: "Standard Express (Tracked)",
-      items: [{ name: "Silk Evening Gown", size: "M", qty: 2, price: "$620.00" }, { name: "Pearl Belt", size: "Free", qty: 1, price: "$450.00" }],
-      subtotal: "$1,240.00", shippingCost: "$25.00", tax: "$93.00", total: "$1,358.00"
+      items: [{ name: "Silk Evening Gown", size: "M", qty: 2, price: "฿6,200.00" }, { name: "Pearl Belt", size: "Free", qty: 1, price: "฿4,500.00" }],
+      subtotal: "฿12,400.00", shippingCost: "฿250.00", tax: "฿930.00", total: "฿13,580.00"
     }
   },
   {
     id: "#ORD-8827",
     customer: "Alistair Graham",
     items: 1,
-    total: "$450.00",
+    total: "฿4,500.00",
     date: "YESTERDAY",
     status: "Ready to Ship",
     detail: {
@@ -33,15 +33,15 @@ const orders = [
       email: "alistair@ramscom.com",
       shipping: "221B Baker St., London, NW1 6XE, UK",
       method: "Priority Express (Tracked)",
-      items: [{ name: "Lavender Cashmere Coat", size: "M", qty: 1, price: "$450.00" }],
-      subtotal: "$450.00", shippingCost: "$25.00", tax: "$95.00", total: "$570.00"
+      items: [{ name: "Lavender Cashmere Coat", size: "M", qty: 1, price: "฿4,500.00" }],
+      subtotal: "฿4,500.00", shippingCost: "฿250.00", tax: "฿950.00", total: "฿5,700.00"
     }
   },
   {
     id: "#ORD-8825",
     customer: "Eleanor Rigby",
     items: 5,
-    total: "$3,890.00",
+    total: "฿38,900.00",
     date: "2 OCT 2023",
     status: "Delivered",
     detail: {
@@ -49,15 +49,15 @@ const orders = [
       email: "rigby@atelier.co",
       shipping: "12 Queen's Lane, Edinburgh, EH1 1AA, UK",
       method: "Standard (Tracked)",
-      items: [{ name: "Velvet Evening Cape", size: "L", qty: 2, price: "$1,200.00" }],
-      subtotal: "$3,890.00", shippingCost: "$0.00", tax: "$389.00", total: "$4,279.00"
+      items: [{ name: "Velvet Evening Cape", size: "L", qty: 2, price: "฿12,000.00" }],
+      subtotal: "฿38,900.00", shippingCost: "฿0.00", tax: "฿3,890.00", total: "฿42,790.00"
     }
   },
   {
     id: "#ORD-8824",
     customer: "Marcus Vane",
     items: 2,
-    total: "$920.00",
+    total: "฿9,200.00",
     date: "1 OCT 2023",
     status: "Refunded",
     detail: {
@@ -65,8 +65,8 @@ const orders = [
       email: "m.vane@mail.com",
       shipping: "44 Via Roma, Milan, 20121, Italy",
       method: "Express",
-      items: [{ name: "Cashmere Turtleneck", size: "S", qty: 2, price: "$460.00" }],
-      subtotal: "$920.00", shippingCost: "$15.00", tax: "$92.00", total: "$1,027.00"
+      items: [{ name: "Cashmere Turtleneck", size: "S", qty: 2, price: "฿4,600.00" }],
+      subtotal: "฿9,200.00", shippingCost: "฿150.00", tax: "฿920.00", total: "฿10,270.00"
     }
   }
 ];

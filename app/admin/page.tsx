@@ -41,7 +41,7 @@ const lowStockProducts = products.filter((p) => (p.inventoryCount ?? 0) <= lowSt
 const kpiCards = [
   {
     label: "Total Revenue",
-    value: `€${(estimatedRevenue / 1000).toFixed(3).replace(".", ",")}`,
+    value: `฿${estimatedRevenue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
     note: "+12.4%",
     positive: true,
     icon: TrendingUp,
@@ -83,10 +83,10 @@ const kpiCards = [
 ];
 
 const recentOrders = [
-  { id: "#LP-5286", customer: "Elena Voronova",  date: "Oct 24, 2023", total: "€3,240.00", status: "DELIVERED" },
-  { id: "#LP-5282", customer: "Julian S.",        date: "Oct 24, 2023", total: "€450.00",   status: "SHIPPED" },
-  { id: "#LP-5280", customer: "Amara Okafor",    date: "Oct 23, 2023", total: "€2,100.00", status: "PENDING" },
-  { id: "#LP-5287", customer: "Marco Polo",       date: "Oct 23, 2023", total: "€89.00",    status: "CANCELLED" }
+  { id: "#LP-5286", customer: "Elena Voronova",  date: "Oct 24, 2023", total: "฿124,500", status: "DELIVERED" },
+  { id: "#LP-5282", customer: "Julian S.",        date: "Oct 24, 2023", total: "฿15,200",    status: "SHIPPED" },
+  { id: "#LP-5280", customer: "Amara Okafor",    date: "Oct 23, 2023", total: "฿72,100",    status: "PENDING" },
+  { id: "#LP-5287", customer: "Marco Polo",       date: "Oct 23, 2023", total: "฿3,450",     status: "CANCELLED" }
 ];
 
 const statusConfig: Record<string, { bg: string; color: string; dot: string }> = {
@@ -104,7 +104,7 @@ const stockWatch = [
 const signaturePieces = products.slice(0, 3).map((p, i) => ({
   name:  p.name,
   sold:  p.reviewCount,
-  price: `€${p.price.toFixed(0)}`,
+  price: `฿${p.price.toLocaleString()}`,
   index: i + 1
 }));
 

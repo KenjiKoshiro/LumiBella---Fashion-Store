@@ -6,9 +6,9 @@ export function calculateSubtotal(items: CartItem[]) {
 }
 
 export function calculateShipping(subtotal: number) {
-  if (subtotal >= 99) return 0;
+  if (subtotal >= 1500) return 0;
   if (subtotal === 0) return 0;
-  return 6.99;
+  return 100;
 }
 
 export function calculateTax(subtotal: number) {
