@@ -63,8 +63,6 @@ export function SiteHeader() {
 
   if (pathname.startsWith("/admin")) return null;
 
-  const isAuthPage = pathname === "/login" || pathname === "/register";
-
   return (
     <>
       <header
