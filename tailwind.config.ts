@@ -9,26 +9,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#faf9f6",
-        surface: "#faf9f6",
-        "surface-low": "#f4f4f0",
+        background: "#FFF5F6",
+        surface: "#FFF5F6",
+        "surface-low": "#FFE4E1",
         "surface-card": "#ffffff",
-        primary: "#80525a",
-        secondary: "#eaddff",
+        primary: "#E5B5B5",
+        secondary: "#FDF7C3",
         tertiary: "#f5f5dc",
-        ink: "#303330",
-        muted: "#5d605c",
-        outline: "#b1b2af",
+        ink: "#4d3d3d",
+        muted: "#8c7a7a",
+        outline: "#d9c5c5",
         blush: "#fec2cb",
         success: "#487055",
         warning: "#a76a1b"
       },
       fontFamily: {
-        headline: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]
+        headline: ["var(--font-playfair)", "serif"],
+        body: ["var(--font-outfit)", "ui-sans-serif", "system-ui", "sans-serif"]
       },
       boxShadow: {
-        ambient: "0 12px 40px rgba(48,51,48,0.06)"
+        ambient: "0 12px 40px rgba(80,50,50,0.06)"
       }
     }
   },

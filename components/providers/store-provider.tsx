@@ -13,6 +13,7 @@ import { CartItem, WishlistItem } from "@/lib/types";
 type StoreState = {
   cart: CartItem[];
   wishlist: WishlistItem[];
+  isCartDrawerOpen: boolean;
 };
 
 type StoreAction =
@@ -21,11 +22,13 @@ type StoreAction =
   | { type: "UPDATE_QUANTITY"; payload: { slug: string; size: string; quantity: number } }
   | { type: "CLEAR_CART" }
   | { type: "TOGGLE_WISHLIST"; payload: WishlistItem }
+  | { type: "SET_CART_DRAWER"; payload: boolean }
   | { type: "HYDRATE"; payload: StoreState };
 
 const initialState: StoreState = {
   cart: [],
-  wishlist: []
+  wishlist: [],
+  isCartDrawerOpen: false
 };
 
 function reducer(state: StoreState, action: StoreAction): StoreState {
@@ -43,10 +46,10 @@ function reducer(state: StoreState, action: StoreAction): StoreState {
           ...nextCart[existingIndex],
           quantity: nextCart[existingIndex].quantity + action.payload.quantity
         };
-        return { ...state, cart: nextCart };
+        return { ...state, cart: nextCart, isCartDrawerOpen: true };
       }
 
-      return { ...state, cart: [...state.cart, action.payload] };
+      return { ...state, cart: [...state.cart, action.payload], isCartDrawerOpen: true };
     }
     case "REMOVE_FROM_CART":
       return {
@@ -80,8 +83,10 @@ function reducer(state: StoreState, action: StoreAction): StoreState {
           : [...state.wishlist, action.payload]
       };
     }
+    case "SET_CART_DRAWER":
+      return { ...state, isCartDrawerOpen: action.payload };
     case "HYDRATE":
-      return action.payload;
+      return { ...state, ...action.payload, isCartDrawerOpen: false };
     default:
       return state;
   }
@@ -96,6 +101,7 @@ type StoreContextValue = {
   updateQuantity: (slug: string, size: string, quantity: number) => void;
   clearCart: () => void;
   toggleWishlist: (item: WishlistItem) => void;
+  setCartDrawerOpen: (open: boolean) => void;
 };
 
 const StoreContext = createContext<StoreContextValue | null>(null);
@@ -125,7 +131,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       updateQuantity: (slug, size, quantity) =>
         dispatch({ type: "UPDATE_QUANTITY", payload: { slug, size, quantity } }),
       clearCart: () => dispatch({ type: "CLEAR_CART" }),
-      toggleWishlist: (item) => dispatch({ type: "TOGGLE_WISHLIST", payload: item })
+      toggleWishlist: (item) => dispatch({ type: "TOGGLE_WISHLIST", payload: item }),
+      setCartDrawerOpen: (open) => dispatch({ type: "SET_CART_DRAWER", payload: open })
     }),
     [state]
   );

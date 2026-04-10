@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
+import { Input } from "@/components/shared/input";
+
 export function AuthForm({ mode }: { mode: "login" | "register" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -63,27 +65,42 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
   }
 
   return (
-    <div className="mx-auto max-w-md rounded-[36px] bg-surface-card p-8 shadow-ambient">
-      <p className="font-headline text-xs font-semibold uppercase tracking-[0.35em] text-primary">{mode === "login" ? "Welcome back" : "Create account"}</p>
-      <h1 className="mt-4 font-headline text-4xl font-extrabold tracking-tight">{mode === "login" ? "Login" : "Register"}</h1>
-      <p className="mt-3 text-muted">Use your email or continue with a social account for a faster experience.</p>
+    <div className="mx-auto max-w-md rounded-[40px] bg-white p-8 shadow-ambient ring-1 ring-black/[0.03]">
+      <div className="text-center">
+        <p className="font-headline text-xs font-semibold uppercase tracking-[0.35em] text-primary">{mode === "login" ? "Welcome back" : "Create account"}</p>
+        <h1 className="mt-4 font-headline text-4xl font-extrabold tracking-tight text-ink">{mode === "login" ? "Login" : "Register"}</h1>
+        <p className="mt-3 text-sm text-muted">Experience polished fashion with a secure, simple account flow.</p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+      <form onSubmit={handleSubmit} className="mt-10 space-y-5">
         {mode === "register" ? (
-          <label className="block text-sm">
-            <span className="mb-2 block text-muted">Full name</span>
-            <input value={fullName} onChange={(event) => setFullName(event.target.value)} className="w-full rounded-2xl bg-surface-low px-4 py-3 outline-none" required />
-          </label>
+          <Input 
+            label="Full name" 
+            placeholder="Jane Doe"
+            value={fullName} 
+            onChange={(event) => setFullName(event.target.value)} 
+            required 
+          />
         ) : null}
-        <label className="block text-sm">
-          <span className="mb-2 block text-muted">Email</span>
-          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-2xl bg-surface-low px-4 py-3 outline-none" required />
-        </label>
-        <label className="block text-sm">
-          <span className="mb-2 block text-muted">Password</span>
-          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} className="w-full rounded-2xl bg-surface-low px-4 py-3 outline-none" required />
-        </label>
-        <button className="w-full rounded-full bg-primary px-5 py-3 font-headline font-semibold text-white transition hover:bg-primary/90">{mode === "login" ? "Login" : "Create account"}</button>
+        <Input 
+          label="Email address" 
+          type="email" 
+          placeholder="name@example.com"
+          value={email} 
+          onChange={(event) => setEmail(event.target.value)} 
+          required 
+        />
+        <Input 
+          label="Password" 
+          type="password" 
+          placeholder="••••••••"
+          value={password} 
+          onChange={(event) => setPassword(event.target.value)} 
+          required 
+        />
+        <button className="w-full rounded-full bg-primary py-4 font-headline text-lg font-bold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl active:scale-[0.98]">
+          {mode === "login" ? "Enter Storefront" : "Create Account"}
+        </button>
       </form>
 
       <div className="relative my-8">

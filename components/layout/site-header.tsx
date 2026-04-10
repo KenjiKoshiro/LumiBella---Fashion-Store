@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 export function SiteHeader() {
-  const { cartCount, wishlistCount } = useStore();
+  const { cartCount, wishlistCount, setCartDrawerOpen } = useStore();
   const [query, setQuery] = useState("");
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,13 +62,15 @@ export function SiteHeader() {
 
   if (pathname.startsWith("/admin")) return null;
 
+  const isAuthPage = pathname === "/login" || pathname === "/register";
+
   return (
     <>
       <header
-        className={`sticky top-0 z-50 spring-transition ${
+        className={`sticky top-5 z-50 mx-auto w-[92%] max-w-7xl spring-transition ${
           isScrolled
-            ? "border-b border-primary/5 bg-white/70 shadow-ambient backdrop-blur-xl py-2"
-            : "border-b border-transparent bg-background py-4"
+            ? "rounded-[32px] border border-primary/10 bg-white/80 shadow-[0_20px_50px_rgba(48,51,48,0.12)] backdrop-blur-xl py-2"
+            : "rounded-[32px] border border-transparent bg-white/40 shadow-ambient py-3"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 lg:px-8">
@@ -118,18 +120,20 @@ export function SiteHeader() {
           </div>
 
           {/* Search Bar (Hidden on Mobile, Animated Focus) */}
-          <form action="/search" className="hidden lg:flex flex-1 max-w-[340px] ml-auto mr-4">
-            <div className="group relative flex w-full items-center rounded-full border border-primary/10 bg-white/50 px-4 py-2.5 transition-all duration-300 focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/20 focus-within:shadow-sm">
-              <Search className="mr-2 h-4 w-4 text-muted transition-colors group-focus-within:text-primary" />
-              <input
-                name="q"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search pieces..."
-                className="w-full bg-transparent text-[13px] font-medium outline-none placeholder:text-muted/70"
-              />
-            </div>
-          </form>
+          {!isAuthPage && (
+            <form action="/search" className="hidden lg:flex flex-1 max-w-[340px] ml-auto mr-4">
+              <div className="group relative flex w-full items-center rounded-full border border-primary/10 bg-white/50 px-4 py-2.5 transition-all duration-300 focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/20 focus-within:shadow-sm">
+                <Search className="mr-2 h-4 w-4 text-muted transition-colors group-focus-within:text-primary" />
+                <input
+                  name="q"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search pieces..."
+                  className="w-full bg-transparent text-[13px] font-medium outline-none placeholder:text-muted/70"
+                />
+              </div>
+            </form>
+          )}
 
           {/* Icons Context */}
           <div className="flex items-center gap-1 md:gap-2">
@@ -162,17 +166,17 @@ export function SiteHeader() {
               )}
             </Link>
 
-            <Link
-              href="/cart"
+            <button
+              onClick={() => setCartDrawerOpen(true)}
               className="group relative rounded-full p-2.5 spring-transition hover:bg-primary/5 active:scale-90"
             >
               <ShoppingBag className="h-[22px] w-[22px] text-ink/80 spring-transition group-hover:scale-110 group-hover:text-primary" />
               {cartCount > 0 && (
-                <span className="absolute right-1 top-1 flex h-4 w-4 animate-pulse items-center justify-center rounded-full bg-blush text-[10px] font-bold text-primary shadow-[0_2px_8px_rgba(254,194,203,0.6)]">
+                <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white shadow-sm">
                   {cartCount}
                 </span>
               )}
-            </Link>
+            </button>
           </div>
         </div>
       </header>
@@ -209,18 +213,20 @@ export function SiteHeader() {
           </div>
 
           {/* Mobile Search */}
-          <div className="px-6 py-5 pb-2">
-            <form action="/search" className="relative flex w-full items-center rounded-2xl bg-white px-4 py-3 shadow-sm border border-primary/5">
-              <Search className="mr-3 h-4 w-4 text-muted" />
-              <input
-                name="q"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search pieces..."
-                className="w-full bg-transparent text-sm font-medium outline-none"
-              />
-            </form>
-          </div>
+          {!isAuthPage && (
+            <div className="px-6 py-5 pb-2">
+              <form action="/search" className="relative flex w-full items-center rounded-2xl bg-white px-4 py-3 shadow-sm border border-primary/5">
+                <Search className="mr-3 h-4 w-4 text-muted" />
+                <input
+                  name="q"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search pieces..."
+                  className="w-full bg-transparent text-sm font-medium outline-none"
+                />
+              </form>
+            </div>
+          )}
 
           {/* Mobile Links */}
           <nav className="flex-1 overflow-y-auto px-4 py-4 space-y-1">

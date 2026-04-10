@@ -10,7 +10,6 @@ export const navigation = [
   { href: "/new-arrivals", label: "New In" },
   { href: "/category/dresses", label: "Dresses" },
   { href: "/category/accessories", label: "Accessories" },
-  { href: "/sale", label: "Sale" },
   { href: "/contact", label: "Contact" },
   { href: "/about", label: "About" }
 ];

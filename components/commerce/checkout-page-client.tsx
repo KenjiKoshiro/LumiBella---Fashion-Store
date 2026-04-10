@@ -6,6 +6,9 @@ import { useStore } from "@/components/providers/store-provider";
 import { applyCoupon, calculateShipping, calculateSubtotal, calculateTax } from "@/lib/commerce";
 import { formatCurrency } from "@/lib/utils";
 
+import { ArrowRight, Lock, MapPin, Truck } from "lucide-react";
+import { Input } from "@/components/shared/input";
+
 export function CheckoutPageClient() {
   const router = useRouter();
   const { state, clearCart } = useStore();
@@ -45,80 +48,122 @@ export function CheckoutPageClient() {
 
   if (state.cart.length === 0) {
     return (
-      <div className="rounded-[32px] bg-surface-low p-8 text-center">
+      <div className="flex flex-col items-center justify-center rounded-[40px] bg-surface-low px-8 py-20 text-center">
         <h2 className="font-headline text-2xl font-bold">No items ready for checkout</h2>
         <p className="mt-3 text-muted">Add products to your bag first.</p>
+        <Link href="/shop" className="mt-8 inline-flex rounded-full bg-primary px-6 py-3 font-headline font-semibold text-white">Continue shopping</Link>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
-      <div className="rounded-[32px] bg-surface-card p-6 shadow-ambient">
-        <h2 className="font-headline text-2xl font-bold">Shipping & payment</h2>
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
-          {["First name", "Last name", "Email", "Phone"].map((field) => (
-            <label key={field} className="text-sm">
-              <span className="mb-2 block text-muted">{field}</span>
-              <input className="w-full rounded-2xl bg-surface-low px-4 py-3 outline-none" />
-            </label>
-          ))}
-          <label className="text-sm md:col-span-2"><span className="mb-2 block text-muted">Address</span><input className="w-full rounded-2xl bg-surface-low px-4 py-3 outline-none" /></label>
-          <label className="text-sm"><span className="mb-2 block text-muted">City</span><input className="w-full rounded-2xl bg-surface-low px-4 py-3 outline-none" /></label>
-          <label className="text-sm"><span className="mb-2 block text-muted">Postal code</span><input className="w-full rounded-2xl bg-surface-low px-4 py-3 outline-none" /></label>
-          <label className="text-sm md:col-span-2"><span className="mb-2 block text-muted">Order notes</span><textarea className="min-h-[120px] w-full rounded-2xl bg-surface-low px-4 py-3 outline-none" /></label>
+    <div className="grid gap-12 lg:grid-cols-[1fr_400px]">
+      <div className="space-y-8">
+        <div className="rounded-[40px] bg-white p-8 shadow-ambient ring-1 ring-black/[0.03]">
+          <div className="flex items-center gap-3 border-b border-outline/10 pb-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+              <MapPin className="h-5 w-5 text-primary" />
+            </div>
+            <h2 className="font-headline text-2xl font-bold tracking-tight text-ink">Shipping Information</h2>
+          </div>
+          
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <Input label="First name" placeholder="E.g. Jane" />
+            <Input label="Last name" placeholder="E.g. Doe" />
+            <Input label="Email address" type="email" placeholder="jane@example.com" className="md:col-span-1" />
+            <Input label="Phone number" type="tel" placeholder="+1 (555) 000-0000" />
+            <div className="md:col-span-2">
+              <Input label="Shipping Address" placeholder="Street name and number" />
+            </div>
+            <Input label="City" placeholder="E.g. Los Angeles" />
+            <Input label="Postal code" placeholder="90001" />
+            <div className="md:col-span-2">
+              <label className="text-sm font-semibold text-muted/80">Order notes (optional)</label>
+              <textarea 
+                className="mt-2 min-h-[120px] w-full rounded-2xl bg-surface-low px-4 py-3 text-sm outline-none transition-all focus:bg-white focus:ring-2 focus:ring-primary/20" 
+                placeholder="Notes about your delivery, e.g. special instructions."
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="mt-8 rounded-[28px] bg-surface-low p-5">
-          <h3 className="font-headline text-lg font-bold">Secure checkout indicators</h3>
-          <p className="mt-3 text-sm leading-6 text-muted">
-            SSL checkout, server-side order validation, coupon checks, inventory reservation, and order email processing are wired into the architecture plan.
+        <div className="rounded-[40px] bg-primary/5 p-8 ring-1 ring-primary/10">
+          <div className="flex items-center gap-3">
+            <Lock className="h-5 w-5 text-primary" />
+            <h3 className="font-headline text-xl font-bold text-ink">Secure Payment</h3>
+          </div>
+          <p className="mt-3 text-sm leading-relaxed text-muted">
+            All transactions are secure and encrypted. We do not store your credit card details on our servers.
           </p>
         </div>
       </div>
 
-      <aside className="rounded-[32px] bg-surface-low p-6">
-        <h2 className="font-headline text-2xl font-bold">Review order</h2>
-        <div className="mt-5 space-y-3">
-          {state.cart.map((item) => (
-            <div key={`${item.slug}-${item.size}`} className="flex items-center justify-between gap-4 text-sm">
-              <div>
-                <p className="font-semibold">{item.name}</p>
-                <p className="text-muted">{item.size} • Qty {item.quantity}</p>
-              </div>
-              <span>{formatCurrency(item.price * item.quantity)}</span>
+      <aside className="relative">
+        <div className="sticky top-28 space-y-6 rounded-[400px] bg-surface-low p-1 shadow-sm ring-1 ring-black/[0.02]">
+          <div className="rounded-[40px] bg-white p-8 shadow-sm">
+            <h2 className="font-headline text-2xl font-bold tracking-tight text-ink">Review Order</h2>
+            
+            <div className="mt-6 flex flex-col gap-4">
+              {state.cart.map((item) => (
+                <div key={`${item.slug}-${item.size}`} className="flex items-center gap-4 border-b border-outline/5 pb-4 last:border-0 last:pb-0">
+                  <div className="relative h-16 w-14 shrink-0 overflow-hidden rounded-xl bg-surface-low">
+                    <Image src={item.image} alt={item.name} fill className="object-cover" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-bold text-ink">{item.name}</p>
+                    <p className="text-xs text-muted">{item.size} • Qty {item.quantity}</p>
+                  </div>
+                  <span className="text-sm font-bold text-ink">{formatCurrency(item.price * item.quantity)}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div className="mt-6 flex gap-3">
-          <input value={coupon} onChange={(event) => setCoupon(event.target.value)} placeholder="Promo code" className="w-full rounded-full bg-white px-4 py-3 outline-none" />
-          <button
-            onClick={() => {
-              const couponResult = applyCoupon(coupon, subtotal, shipping);
-              setDiscount(couponResult.discount);
-              setShippingDiscount(couponResult.shippingDiscount);
-              setCouponMessage(couponResult.message);
-            }}
-            className="rounded-full bg-primary px-4 py-3 font-headline font-semibold text-white"
-          >
-            Apply
-          </button>
-        </div>
-        {couponMessage ? <p className="mt-3 text-sm text-primary">{couponMessage}</p> : null}
+            <div className="mt-8 flex gap-2">
+              <Input 
+                value={coupon} 
+                onChange={(event) => setCoupon(event.target.value)} 
+                placeholder="Promo code" 
+                className="h-11 bg-surface-low/50"
+              />
+              <button
+                onClick={() => {
+                  const couponResult = applyCoupon(coupon, subtotal, shipping);
+                  setDiscount(couponResult.discount);
+                  setShippingDiscount(couponResult.shippingDiscount);
+                  setCouponMessage(couponResult.message);
+                }}
+                className="h-11 rounded-full bg-ink px-6 text-sm font-bold text-white transition-all hover:bg-primary active:scale-95"
+              >
+                Apply
+              </button>
+            </div>
+            {couponMessage ? <p className="mt-2 text-[11px] font-bold text-primary">{couponMessage}</p> : null}
 
-        <div className="mt-6 space-y-3 text-sm">
-          <div className="flex justify-between"><span className="text-muted">Subtotal</span><span>{formatCurrency(subtotal)}</span></div>
-          <div className="flex justify-between"><span className="text-muted">Shipping</span><span>{shipping - shippingDiscount <= 0 ? "Free" : formatCurrency(shipping - shippingDiscount)}</span></div>
-          {discount > 0 ? <div className="flex justify-between text-primary"><span>Discount</span><span>-{formatCurrency(discount)}</span></div> : null}
-          <div className="flex justify-between"><span className="text-muted">Estimated tax</span><span>{formatCurrency(tax)}</span></div>
-          <div className="flex justify-between"><span className="text-muted">Estimated delivery</span><span>{estimatedDelivery}</span></div>
-          <div className="border-t border-outline/15 pt-4"><div className="flex justify-between font-headline text-lg font-bold"><span>Total</span><span>{formatCurrency(Math.max(total, 0))}</span></div></div>
-        </div>
+            <div className="mt-8 space-y-3 border-t border-outline/10 pt-6 text-sm font-medium">
+              <div className="flex justify-between text-muted"><span>Subtotal</span><span className="text-ink">{formatCurrency(subtotal)}</span></div>
+              <div className="flex justify-between text-muted">
+                <div className="flex items-center gap-1.5"><Truck className="h-3.5 w-3.5" /><span>Shipping</span></div>
+                <span className="text-ink">{shipping - shippingDiscount <= 0 ? "Complimentary" : formatCurrency(shipping - shippingDiscount)}</span>
+              </div>
+              {discount > 0 ? <div className="flex justify-between text-primary"><span>Discount</span><span>-{formatCurrency(discount)}</span></div> : null}
+              <div className="flex justify-between text-muted"><span>Estimated tax</span><span className="text-ink">{formatCurrency(tax)}</span></div>
+              <div className="flex justify-between text-muted"><span>Est. Delivery</span><span className="text-ink">{estimatedDelivery}</span></div>
+              <div className="mt-4 flex justify-between font-headline text-2xl font-bold text-ink">
+                <span>Total</span>
+                <span>{formatCurrency(Math.max(total, 0))}</span>
+              </div>
+            </div>
 
-        <button onClick={placeOrder} disabled={loading} className="mt-6 inline-flex w-full justify-center rounded-full bg-primary px-5 py-3 font-headline font-semibold text-white disabled:opacity-60">
-          {loading ? "Placing order..." : "Place order"}
-        </button>
+            <button 
+              onClick={placeOrder} 
+              disabled={loading} 
+              className="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 font-headline text-lg font-bold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl disabled:opacity-60"
+            >
+              {loading ? "Processing..." : "Complete Purchase"}
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </button>
+          </div>
+        </div>
       </aside>
     </div>
   );
