@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Outfit, Playfair_Display } from "next/font/google";
 import "@/app/globals.css";
 import { SiteHeader } from "@/components/layout/site-header";
