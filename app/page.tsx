@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import FeaturedProducts from "@/components/commerce/featured-products";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { testimonials, valueProps } from "@/lib/constants";
@@ -147,6 +148,37 @@ export default async function HomePage() {
             {bestSellers.slice(0, 4).map((product) => (
               <ProductCard key={product.slug} product={product} />
             ))}
+          </div>
+        </section>
+      </ScrollReveal>
+
+      <ScrollReveal delay={0.2}>
+        <section className="grid gap-12 rounded-[40px] bg-white p-6 shadow-ambient lg:grid-cols-2 lg:p-12">
+          <div className="overflow-hidden rounded-[32px] bg-surface-low">
+            <Image 
+              src="/images/about-boutique.png" 
+              alt="The LumiBella Boutique Interior" 
+              width={1200} 
+              height={1000} 
+              className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105" 
+            />
+          </div>
+          <div className="flex flex-col justify-center">
+            <p className="font-headline text-xs font-semibold uppercase tracking-[0.35em] text-primary">
+              The Boutique Experience
+            </p>
+            <h2 className="mt-6 font-headline text-4xl font-extrabold tracking-tight text-ink lg:text-5xl">
+              Modern grace, <br/>Curated for you.
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-muted">
+              LumiBella isn&apos;t just a store; it&apos;s a curated destination for modern girls who value both effortless style and thoughtful quality. Every piece in our collection is selected to bring a touch of soft light to your wardrobe.
+            </p>
+            <div className="mt-8">
+              <Link href="/about" className="group inline-flex items-center gap-2 font-headline text-base font-bold text-primary transition-all hover:gap-3">
+                Discover our story
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
           </div>
         </section>
       </ScrollReveal>
