@@ -25,7 +25,7 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="overflow-hidden rounded-[32px] bg-surface-low">
-          <Image src="/placeholders/hero-secondary.svg" alt="About LumiBelle" width={960} height={900} className="h-full w-full object-cover" />
+          <Image src="/images/about-boutique.png" alt="About LumiBelle Boutique" width={960} height={900} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
         </div>
       </section>
 
