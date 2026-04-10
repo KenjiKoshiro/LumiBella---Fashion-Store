@@ -12,6 +12,7 @@ export function SiteHeader() {
   const { cartCount, wishlistCount, setCartDrawerOpen } = useStore();
   const [query, setQuery] = useState("");
   const pathname = usePathname();
+  const isAuthPage = pathname === "/login" || pathname === "/register";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userMetadata, setUserMetadata] = useState<any>(null);
