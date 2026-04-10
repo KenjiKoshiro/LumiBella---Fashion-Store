@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { ShoppingBag, ArrowRight } from "lucide-react";
 import { useStore } from "@/components/providers/store-provider";
 import { calculateShipping, calculateSubtotal, calculateTax } from "@/lib/commerce";
 import { formatCurrency } from "@/lib/utils";

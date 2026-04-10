@@ -5,6 +5,8 @@ import { ShoppingBag } from "lucide-react";
 import { Product } from "@/lib/types";
 import { useStore } from "@/components/providers/store-provider";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/components/providers/toast-provider";
+import { motion } from "framer-motion";
 
 type Props = {
   product: Product;
@@ -14,9 +16,6 @@ type Props = {
   };
   compact?: boolean;
 };
-
-import { useToast } from "@/components/providers/toast-provider";
-import { motion } from "framer-motion";
 
 export function AddToCartButton({ product, defaults, compact = false }: Props) {
   const { addToCart } = useStore();
