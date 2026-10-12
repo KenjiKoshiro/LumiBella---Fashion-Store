@@ -7,6 +7,7 @@ import { brand, navigation } from "@/lib/constants";
 import { useStore } from "@/components/providers/store-provider";
 import { useState, useEffect } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { hasSupabaseConfig } from "@/lib/supabase/config";
 
 export function SiteHeader() {
   const { cartCount, wishlistCount, setCartDrawerOpen } = useStore();
@@ -16,7 +17,6 @@ export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userMetadata, setUserMetadata] = useState<any>(null);
-  const supabase = createSupabaseBrowserClient();
 
   // Subtle blur and shadow on scroll
   useEffect(() => {
@@ -46,6 +46,8 @@ export function SiteHeader() {
 
   // Load user metadata for the login indicator
   useEffect(() => {
+    if (!hasSupabaseConfig()) return;
+    const supabase = createSupabaseBrowserClient();
     const fetchUser = async () => {
       const { data } = await supabase.auth.getUser();
       setUserMetadata(data?.user?.user_metadata || null);
@@ -59,7 +61,7 @@ export function SiteHeader() {
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+  }, []);
 
   if (pathname.startsWith("/admin")) return null;
 

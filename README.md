@@ -24,3 +24,19 @@ npm run dev
 ## Supabase
 
 Run the migrations first, then `supabase/seed_products.sql` if you want the richer schema populated with the included catalog.
+
+## Recovery and service availability
+
+The public storefront keeps displaying the existing preview catalog when Supabase
+is missing or unreachable. A status banner identifies that catalog as a preview.
+Local placeholder image paths stay local. The current category query matches
+the checked-in schema, which has no `categories.image` column.
+
+Checkout and contact delivery currently return HTTP 503 instead of inventing an
+order confirmation or claiming that an email was sent. Failed checkout requests
+preserve the cart. The confirmation page does not treat a query-string order
+number as proof of a purchase.
+
+Real commerce and email are pending Shopify and Resend connection, provider terms,
+merchant setup, and sender verification. Keep ordering unavailable until those
+services are connected and the full checkout and delivery flows have been tested.

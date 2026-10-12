@@ -19,6 +19,7 @@ export function CheckoutPageClient() {
   const [discount, setDiscount] = useState(0);
   const [shippingDiscount, setShippingDiscount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const subtotal = calculateSubtotal(state.cart);
   const shipping = calculateShipping(subtotal);
@@ -32,7 +33,9 @@ export function CheckoutPageClient() {
   }, []);
 
   async function placeOrder() {
+    if (loading) return;
     setLoading(true);
+    setError("");
     try {
       const response = await fetch("/api/checkout", {
         method: "POST",
@@ -40,9 +43,14 @@ export function CheckoutPageClient() {
         body: JSON.stringify({ items: state.cart, couponCode: coupon })
       });
 
-      const data = (await response.json()) as { orderId: string };
+      const data = (await response.json()) as { orderId?: string; error?: string };
+      if (!response.ok || !data.orderId) {
+        throw new Error(data.error || "Your order could not be placed. Your bag has been saved.");
+      }
       clearCart();
-      router.push(`/order-success?order=${data.orderId}`);
+      router.push(`/order-success?order=${encodeURIComponent(data.orderId)}`);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Your order could not be placed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -156,6 +164,7 @@ export function CheckoutPageClient() {
               </div>
             </div>
 
+            {error && <p role="alert" className="mt-6 rounded-2xl bg-red-50 p-4 text-sm text-red-700">{error}</p>}
             <button 
               onClick={placeOrder} 
               disabled={loading} 

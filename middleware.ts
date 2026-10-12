@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CookieOptions, createServerClient } from "@supabase/ssr";
+import { hasSupabaseConfig } from "@/lib/supabase/config";
 
 export async function middleware(request: NextRequest) {
+  if (!hasSupabaseConfig()) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(

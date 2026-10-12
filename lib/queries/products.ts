@@ -10,6 +10,7 @@ import {
 } from "@/lib/mock-data";
 import { titleCase } from "@/lib/utils";
 import { getStoragePublicUrl } from "@/lib/supabase/storage";
+import { hasSupabaseConfig } from "@/lib/supabase/config";
 
 type ModernProductRow = {
   id: string;
@@ -197,7 +198,7 @@ async function fetchModernCatalog() {
 
   const { data: categoryRows, error: categoryError } = await supabase
     .from("categories")
-    .select("id, slug, name, description, image")
+    .select("id, slug, name, description")
     .eq("is_active", true)
     .order("sort_order", { ascending: true });
   if (categoryError) {
@@ -214,7 +215,7 @@ async function fetchModernCatalog() {
         slug: row.slug,
         name: row.name,
         description: row.description ?? "",
-        image: row.image || getFallbackCategoryBySlug(row.slug)?.image || placeholderFor(row.slug)
+        image: getFallbackCategoryBySlug(row.slug)?.image || placeholderFor(row.slug)
       }
     ])
   );
@@ -409,19 +410,27 @@ async function fetchLegacyCatalog() {
 }
 
 const getCatalog = cache(async () => {
+  const fallback = () => ({
+    categories: fallbackCategories,
+    products: withRelated(fallbackProducts),
+    available: false
+  });
+  if (!hasSupabaseConfig()) return fallback();
   try {
-    return await fetchModernCatalog();
+    return { ...(await fetchModernCatalog()), available: true };
   } catch {
     try {
-      return await fetchLegacyCatalog();
-    } catch (err) {
-      throw new Error(
-        "LumiBelle store is temporarily unavailable. Please try again shortly.",
-        { cause: err }
-      );
+      return { ...(await fetchLegacyCatalog()), available: true };
+    } catch {
+      console.warn("Catalog unavailable; displaying the existing preview catalog.");
+      return fallback();
     }
   }
 });
+
+export async function isCatalogAvailable() {
+  return (await getCatalog()).available;
+}
 
 export async function getCategories() {
   return (await getCatalog()).categories;

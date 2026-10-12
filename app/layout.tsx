@@ -7,6 +7,7 @@ import { StoreProvider } from "@/components/providers/store-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 import { CartDrawer } from "@/components/commerce/cart-drawer";
+import { isCatalogAvailable } from "@/lib/queries/products";
 
 const outfit = Outfit({ 
   subsets: ["latin"],
@@ -25,13 +26,15 @@ export const metadata: Metadata = {
   description: "Premium-accessible fashion storefront built with Next.js, Supabase, and Render."
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const catalogAvailable = await isCatalogAvailable();
   return (
     <html lang="en" className={`${outfit.variable} ${playfair.variable}`}>
       <body className="font-body antialiased">
         <StoreProvider>
           <ToastProvider>
             <SiteHeader />
+            {!catalogAvailable && <p role="status" className="mx-auto max-w-7xl px-4 py-3 text-center text-sm text-muted">You are viewing a preview catalog. Ordering is temporarily unavailable.</p>}
             <CartDrawer />
             <main className="mx-auto min-h-[70vh] max-w-7xl px-4 py-8 lg:px-8 font-body antialiased">{children}</main>
             <SiteFooter />
