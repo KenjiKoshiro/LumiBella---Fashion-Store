@@ -134,10 +134,7 @@ function normalizeLegacyProduct(row: Record<string, any>, categoryMap: Map<strin
   const freeSize = fallback?.freeSize ?? categorySlug === "accessories";
   const sizes = fallback?.sizes ?? defaultSizes(categorySlug, freeSize);
 
-  const primaryImage =
-    fallback?.imageAuditStatus === "broken"
-      ? fallback.primaryImage
-      : row.image_url || fallback?.primaryImage || placeholderFor(categorySlug);
+  const primaryImage = row.image_url || fallback?.primaryImage || placeholderFor(categorySlug);
 
   const look2 =
     row.look2_url ||
@@ -149,9 +146,9 @@ function normalizeLegacyProduct(row: Record<string, any>, categoryMap: Map<strin
     fallback?.images?.[2] ||
     primaryImage;
 
-  const images = (fallback?.images?.length
-    ? fallback.images
-    : [primaryImage, look2, look3]
+  const images = uniqueStrings(row.image_url
+    ? [primaryImage, row.look2_url, row.look3_url].filter(Boolean)
+    : fallback?.images?.length ? fallback.images : [primaryImage, look2, look3]
   ).map((img: string) => getStoragePublicUrl(img));
 
   const finalPrimaryImage = images[0] ?? placeholderFor(categorySlug);
@@ -257,9 +254,8 @@ async function fetchModernCatalog() {
     const saved = getFallbackProductBySlug(row.slug);
     const sizes = saved?.sizes ?? defaultSizes(categorySlug, freeSize);
     const rawImages = imagesByProduct.get(row.id) ?? (row.image_url ? [row.image_url] : []);
-    const images = saved?.imageAuditStatus === "broken"
-      ? saved.images
-      : rawImages.length ? rawImages.map(path => getStoragePublicUrl(path)) : [placeholderFor(categorySlug)];
+    // Prefer live storage records over historical fallback audit flags.
+    const images = rawImages.length ? rawImages.map(path => getStoragePublicUrl(path)) : [placeholderFor(categorySlug)];
 
     const primaryImage = images[0];
 
