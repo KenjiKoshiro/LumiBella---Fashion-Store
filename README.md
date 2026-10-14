@@ -58,3 +58,11 @@ Real payments, real email, SerpApi search, inventory reservations and real custo
 ## Vercel release
 
 Project: `lumi-bella-fashion-store`, team: `kenjikoshiros-projects`. Keep Supabase configuration in the intended Preview/Production environments. Run tests, type checks and the production build before release, then inspect deployment status and exercise the public site. Keep this repo's default branch aligned with the released commit. Never disable deployment protection merely to test a preview.
+
+### Product photo repair - 2026-10-15
+
+All 42 catalog photo URLs returned HTTP 200 with WebP image data. Historical
+`broken` flags in the fallback catalog were overriding valid Supabase photos.
+Live image records now take precedence in modern and legacy queries. Existing
+storage files are preserved; no external photo API or replacement uploads are
+needed. Runtime image-error placeholders remain for unavailable photos.
