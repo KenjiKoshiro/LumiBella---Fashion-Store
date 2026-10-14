@@ -8,7 +8,7 @@ export default async function BestSellersPage() {
     <CatalogGrid
       products={products}
       title="Best sellers"
-      description="Products with stronger visual proof, featured merchandising support, and higher trust for quick conversion."
+      description="Discover the featured favourites in our demo collection."
     />
   );
 }

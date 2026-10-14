@@ -47,8 +47,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                 )}
               </div>
-              <p className="text-sm font-bold text-ink">{toast.message}</p>
-              <button
+              <p role="status" className="text-sm font-bold text-ink">{toast.message}</p>
+              <button aria-label="Dismiss notification"
                 onClick={() => setToasts((prev) => prev.filter((t) => t.id !== toast.id))}
                 className="ml-2 text-muted/30 hover:text-ink"
               >

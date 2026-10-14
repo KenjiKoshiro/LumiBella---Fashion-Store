@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { hasSupabaseConfig } from "@/lib/supabase/config";
 
 import { Input } from "@/components/shared/input";
 
@@ -11,9 +12,13 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [message, setMessage] = useState("");
-  const supabase = createSupabaseBrowserClient();
 
   const handleGoogleLogin = async () => {
+    if (!hasSupabaseConfig()) {
+      setMessage("Account sign-in is temporarily unavailable. Please try again later.");
+      return;
+    }
+    const supabase = createSupabaseBrowserClient();
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -25,6 +30,11 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!hasSupabaseConfig()) {
+      setMessage("Account sign-in is temporarily unavailable. Please try again later.");
+      return;
+    }
+    const supabase = createSupabaseBrowserClient();
 
     if (mode === "login") {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });

@@ -1,176 +1,29 @@
-import Image from "next/image";
 import Link from "next/link";
-import FeaturedProducts from "@/components/commerce/featured-products";
-import { SectionHeading } from "@/components/shared/section-heading";
-import { testimonials, valueProps } from "@/lib/constants";
-import { getBestSellerProducts, getCategories, getNewArrivalProducts } from "@/lib/queries/products";
+import { getAllProducts, getCategories } from "@/lib/queries/products";
 import { ProductCard } from "@/components/commerce/product-card";
-import { ScrollReveal } from "@/components/shared/scroll-reveal";
+import { CatalogImage } from "@/components/shared/catalog-image";
 
 export default async function HomePage() {
-  const [categories, newArrivals, bestSellers] = await Promise.all([
-    getCategories(),
-    getNewArrivalProducts(),
-    getBestSellerProducts()
-  ]);
-
-  return (
-    <div className="space-y-24 pb-12">
-      <ScrollReveal>
-        <section className="grid gap-8 rounded-[40px] bg-white p-6 shadow-ambient lg:grid-cols-[1.1fr_0.9fr] lg:p-10">
-          <div className="flex flex-col justify-center">
-            <p className="font-headline text-xs font-semibold uppercase tracking-[0.35em] text-primary">
-              Fresh drop for modern girls
-            </p>
-            <h1 className="mt-4 max-w-xl font-headline text-5xl font-extrabold tracking-tight text-ink lg:text-7xl">
-              Soft, polished fashion with a real shopping flow.
-            </h1>
-            <p className="mt-5 max-w-xl text-lg leading-8 text-muted">
-              LumiBelle now includes a cleaner storefront, a verified product image audit workflow, Supabase-ready catalog queries, and mobile-friendly product discovery.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/shop" className="rounded-full bg-primary px-8 py-4 font-headline font-semibold text-white shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl active:scale-95">
-                Shop the catalog
-              </Link>
-              <Link href="/new-arrivals" className="rounded-full border border-outline/15 px-8 py-4 font-headline font-semibold text-ink transition-all hover:bg-surface-low">
-                Explore new arrivals
-              </Link>
-            </div>
-
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
-              {[
-                { label: "Products rendered", value: "42" },
-                { label: "Verified image links", value: "14" },
-                { label: "Fallback-safe cards", value: "28" }
-              ].map((item) => (
-                <div key={item.label} className="rounded-[24px] bg-surface-low p-5">
-                  <p className="font-headline text-3xl font-extrabold text-primary">{item.value}</p>
-                  <p className="mt-1 text-sm font-medium text-muted">{item.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="overflow-hidden rounded-[32px] bg-surface-low shadow-sm">
-              <Image 
-                src="https://wzuxnpxkpbjgotnccoav.supabase.co/storage/v1/object/public/images/Motion%20Fit%20Set.webp" 
-                alt="LumiBelle seasonal feature" 
-                width={900} 
-                height={1100} 
-                className="h-full w-full object-cover transition duration-700 hover:scale-105" 
-              />
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="overflow-hidden rounded-[32px] bg-surface-low shadow-sm">
-                <Image 
-                  src="https://wzuxnpxkpbjgotnccoav.supabase.co/storage/v1/object/public/images/Blush%20Midi%20Dress.webp" 
-                  alt="LumiBelle trending pieces" 
-                  width={900} 
-                  height={520} 
-                  className="h-full w-full object-cover transition duration-700 hover:scale-105" 
-                />
-              </div>
-              <div className="rounded-[32px] bg-secondary/45 p-8">
-                <p className="font-headline text-xl font-bold text-ink">Conversion-friendly updates</p>
-                <p className="mt-4 text-sm leading-relaxed text-muted">
-                  Cleaner experiences across home, product, and collection pages with fewer demo-only dependencies.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.2}>
-        <section>
-          <SectionHeading
-            eyebrow="Shop by category"
-            title="Browse the edits that shoppers actually use"
-            description="Each category is wired to the shared catalog layer so the site works with Supabase when available and still stays usable with fallback catalog data."
-          />
-          <div className="grid gap-6 md:grid-cols-3 xl:grid-cols-6">
-            {categories.map((category) => (
-              <Link key={category.slug} href={`/category/${category.slug}`} className="group rounded-[30px] bg-white p-4 shadow-ambient transition duration-500 hover:-translate-y-2 hover:shadow-xl">
-                <div className="overflow-hidden rounded-[24px] bg-surface-low">
-                  <Image src={category.image} alt={category.name} width={320} height={360} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" />
-                </div>
-                <h3 className="mt-5 font-headline text-xl font-bold text-ink">{category.name}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted">{category.description}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.2}>
-        <FeaturedProducts />
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.2}>
-        <section className="grid gap-8 lg:grid-cols-3">
-          {valueProps.map((item) => (
-            <div key={item.title} className="rounded-[40px] border border-white bg-white/50 p-8 shadow-ambient backdrop-blur-sm transition-all hover:bg-white hover:shadow-xl">
-              <h3 className="font-headline text-2xl font-bold text-ink">{item.title}</h3>
-              <p className="mt-4 text-sm leading-relaxed text-muted">{item.description}</p>
-            </div>
-          ))}
-        </section>
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.2}>
-        <section className="space-y-10">
-          <SectionHeading
-            eyebrow="New arrivals"
-            title="Fresh products ready for browsing"
-            description="Newness cards are driven by the shared product model so they remain consistent across home, collections, and search."
-            action={<Link href="/new-arrivals" className="rounded-full border border-outline/20 px-6 py-3 font-headline text-sm font-semibold text-ink transition-all hover:bg-white">View all</Link>}
-          />
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-            {newArrivals.slice(0, 4).map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
-        </section>
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.2}>
-        <section className="space-y-10">
-          <SectionHeading
-            eyebrow="Best sellers"
-            title="Top-performing products with stronger social proof"
-            description="These are ideal for promotion slots, email campaigns, and trust-building merch rows."
-            action={<Link href="/best-sellers" className="rounded-full border border-outline/20 px-6 py-3 font-headline text-sm font-semibold text-ink transition-all hover:bg-white">See more</Link>}
-          />
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-            {bestSellers.slice(0, 4).map((product) => (
-              <ProductCard key={product.slug} product={product} />
-            ))}
-          </div>
-        </section>
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.2}>
-        <section className="rounded-[40px] bg-white p-6 shadow-ambient lg:p-12">
-          <SectionHeading
-            eyebrow="Loved by shoppers"
-            title="Social-proof style testimonials"
-            description="Simple, believable feedback blocks that support trust without cluttering the shopping experience."
-          />
-          <div className="grid gap-8 lg:grid-cols-3">
-            {testimonials.map((item) => (
-              <div key={item.name} className="rounded-[32px] bg-surface-low p-8 transition-colors hover:bg-primary/5">
-                <p className="text-lg leading-relaxed text-ink italic">“{item.quote}”</p>
-                <div className="mt-8 flex items-center gap-3">
-                  <div className="h-px w-8 bg-primary/30" />
-                  <p className="font-headline text-xs font-bold uppercase tracking-[0.25em] text-primary">{item.name}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      </ScrollReveal>
-    </div>
-  );
+  const [products, categories] = await Promise.all([getAllProducts(), getCategories()]);
+  const hero = products.find(item => item.primaryImage.startsWith("http")) ?? products[0];
+  return <div className="space-y-16 pb-10 md:space-y-24">
+    <section className="grid overflow-hidden rounded-[2rem] bg-[#f2e3de] lg:min-h-[560px] lg:grid-cols-2">
+      <div className="flex flex-col justify-center p-7 md:p-12 lg:p-16">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">The everyday edit · Thailand</p>
+        <h1 className="mt-6 font-headline text-5xl leading-[1.08] tracking-tight md:text-7xl">Soft light.<br /><span className="italic">Your own style.</span></h1>
+        <p className="mt-6 max-w-md text-lg leading-8 text-muted">Easy layers, thoughtful details, and pieces to make every day feel a little more you.</p>
+        <div className="mt-8 flex flex-wrap gap-3"><Link href="/shop" className="rounded-full bg-primary px-7 py-4 font-semibold text-white">Explore the collection ↗</Link><Link href="/new-arrivals" className="rounded-full border border-ink/25 px-7 py-4">See what's new</Link></div>
+        <p className="mt-8 text-sm text-muted">A fashion demo. Browse, save favourites, and try the bag.</p>
+      </div>
+      <div className="relative min-h-[360px] bg-surface-low">
+        <CatalogImage src={hero?.primaryImage ?? "/placeholders/hero-main.svg"} alt={hero?.name ?? "LumiBelle collection illustration"} width={900} height={1100} priority className="h-full max-h-[650px] w-full object-cover" />
+        <div className="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/95 p-5"><p className="text-xs uppercase tracking-widest text-primary">In the spotlight</p><p className="mt-2 font-headline text-2xl">{hero?.name ?? "The LumiBelle collection"}</p></div>
+      </div>
+    </section>
+    <section><div className="mb-7 flex flex-wrap items-end justify-between gap-4"><div><p className="text-xs uppercase tracking-widest text-primary">Find your mood</p><h2 className="mt-3 font-headline text-4xl">A piece for every day</h2></div><Link href="/shop" className="underline underline-offset-4">View all pieces</Link></div>
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">{categories.map((category, index) => <Link key={category.slug} href={`/category/${category.slug}`} className="group rounded-2xl border border-outline/40 bg-white p-5"><span className="text-xs text-muted">0{index + 1}</span><h3 className="mt-5 font-headline text-xl group-hover:text-primary">{category.name}</h3><span className="mt-4 block" aria-hidden="true">↗</span></Link>)}</div>
+    </section>
+    <section><p className="text-xs uppercase tracking-widest text-primary">Handpicked for your wardrobe</p><h2 className="mb-8 mt-3 font-headline text-4xl">The LumiBelle selection</h2><div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">{products.slice(0, 8).map(product => <ProductCard key={product.slug} product={product} />)}</div></section>
+    <section className="grid gap-6 border-y border-outline/50 py-10 md:grid-cols-3">{[{ title: "Make it your own", text: "Explore sizes and styling details before adding a piece to your demo bag." }, { title: "Keep your favourites", text: "Your wishlist and bag stay in this browser, ready when you return." }, { title: "Try it freely", text: "Enjoy a complete demo checkout without payment or personal details." }].map(item => <div key={item.title}><h2 className="font-headline text-2xl">{item.title}</h2><p className="mt-3 leading-7 text-muted">{item.text}</p></div>)}</section>
+  </div>;
 }

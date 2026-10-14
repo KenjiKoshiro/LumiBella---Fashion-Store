@@ -1,15 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { CatalogImage as Image } from "@/components/shared/catalog-image";
 import Link from "next/link";
 import { Sparkles, Star } from "lucide-react";
 import { AddToCartButton } from "@/components/commerce/add-to-cart-button";
 import { WishlistButton } from "@/components/commerce/wishlist-button";
 import { Product } from "@/lib/types";
-import { formatCurrency } from "@/lib/utils";
+import { usePrice } from "@/components/providers/currency-provider";
 
 export function ProductCard({ product }: { product: Product }) {
+  const formatCurrency = usePrice();
   const hasDiscount = !!product.compareAtPrice && product.compareAtPrice > product.price;
   const defaultSize = product.freeSize ? "Free Size" : product.sizes[0] ?? "One Size";
 
@@ -51,7 +52,7 @@ export function ProductCard({ product }: { product: Product }) {
           )}
           {product.inventoryCount <= 8 && product.inventoryCount > 0 && (
             <span className="rounded-full bg-tertiary/90 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-ink shadow-sm backdrop-blur-md">
-              Low stock
+              Demo stock
             </span>
           )}
         </div>
@@ -103,7 +104,7 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         <div className="flex items-center justify-between gap-3 pt-2">
-          <span className="text-xs font-bold text-muted/60">{product.inventoryCount} in stock</span>
+          <span className="text-xs font-bold text-muted">{product.inventoryCount} demo stock</span>
           <AddToCartButton
             product={product}
             defaults={{ size: defaultSize }}

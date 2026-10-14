@@ -9,7 +9,7 @@ import { SizeRecommendationPanel } from "@/components/commerce/size-recommendati
 import { AddToCartButton } from "@/components/commerce/add-to-cart-button";
 import { WishlistButton } from "@/components/commerce/wishlist-button";
 import { ProductCard } from "@/components/commerce/product-card";
-import { formatCurrency } from "@/lib/utils";
+import { usePrice } from "@/components/providers/currency-provider";
 import { Product } from "@/lib/types";
 
 export function ProductDetailClient({
@@ -19,6 +19,7 @@ export function ProductDetailClient({
   product: Product;
   relatedProducts: Product[];
 }) {
+  const formatCurrency = usePrice();
   const initialSize = product.freeSize ? "Free Size" : product.sizes?.[0] ?? "";
   const initialImage = product.images?.[0] || "";
 
@@ -62,7 +63,7 @@ export function ProductDetailClient({
               </span>
             ) : null}
             <span className="rounded-full bg-tertiary px-3 py-1 text-sm font-semibold text-ink">
-              {product.rating} ★ ({product.reviewCount} reviews)
+              Sample rating: {product.rating} ★
             </span>
           </div>
 
@@ -74,6 +75,7 @@ export function ProductDetailClient({
                 return (
                   <motion.button
                     key={size}
+                    aria-pressed={active}
                     type="button"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.97 }}
@@ -110,7 +112,7 @@ export function ProductDetailClient({
                 href="/checkout"
                 className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 font-headline font-semibold text-ink"
               >
-                Buy now
+                Review demo bag
               </Link>
               <WishlistButton
                 item={{
@@ -133,7 +135,7 @@ export function ProductDetailClient({
                 <h3 className="font-headline text-lg font-bold">Shipping info</h3>
               </div>
               <p className="mt-3 text-sm leading-6 text-muted">
-                Estimated delivery in 4–7 business days. Shipping fee is shown at checkout and becomes free over the configured threshold.
+                This is a demo collection. Products are not shipped and no delivery fee is charged.
               </p>
             </div>
             <div className="rounded-[28px] bg-surface-card p-5 shadow-ambient">
@@ -142,7 +144,7 @@ export function ProductDetailClient({
                 <h3 className="font-headline text-lg font-bold">Returns & trust</h3>
               </div>
               <p className="mt-3 text-sm leading-6 text-muted">
-                7-day return window for unworn items, secure checkout indicators, and verified review support.
+                No payment is taken. Ratings and stock shown in this demo are illustrative, not verified customer reviews.
               </p>
             </div>
           </div>
@@ -164,7 +166,7 @@ export function ProductDetailClient({
         <div className="mb-8">
           <h2 className="font-headline text-3xl font-extrabold tracking-tight">Related items</h2>
           <p className="mt-3 text-muted">
-            Similar products, recommendation blocks, and recently viewed slots can be powered by query logic or Supabase functions.
+            More pieces to explore from the same collection.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">

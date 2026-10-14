@@ -40,7 +40,7 @@ export default function AdminSettingsPage() {
               <label className="block text-[11px] font-semibold text-[#888] uppercase tracking-wider mb-1.5">Store Name</label>
               <input
                 type="text"
-                defaultValue="L'Atelier Petit"
+                defaultValue="LumiBelle Petit"
                 className="w-full rounded-xl border border-[#e8e8e8] bg-[#fafafa] px-3.5 py-2.5 text-sm text-[#1a1a1a] outline-none focus:border-[#6b3fa0] transition"
               />
             </div>

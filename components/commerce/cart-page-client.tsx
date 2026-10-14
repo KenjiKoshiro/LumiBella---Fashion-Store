@@ -1,15 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import { CatalogImage as Image } from "@/components/shared/catalog-image";
 import { ShoppingBag, ArrowRight } from "lucide-react";
 import { useStore } from "@/components/providers/store-provider";
 import { calculateShipping, calculateSubtotal, calculateTax } from "@/lib/commerce";
-import { formatCurrency } from "@/lib/utils";
+import { usePrice } from "@/components/providers/currency-provider";
 
 import { QuantitySelector } from "@/components/commerce/quantity-selector";
 
 export function CartPageClient() {
+  const formatCurrency = usePrice();
   const { state, removeFromCart, updateQuantity } = useStore();
   const subtotal = calculateSubtotal(state.cart);
   const shipping = calculateShipping(subtotal);
@@ -104,11 +105,11 @@ export function CartPageClient() {
             <div className="flex justify-between text-muted">
               <span>Shipping</span>
               <span className="text-ink">
-                {shipping === 0 ? "Complimentary" : formatCurrency(shipping)}
+                {shipping === 0 ? "Not charged (demo)" : formatCurrency(shipping)}
               </span>
             </div>
             <div className="flex justify-between text-muted">
-              <span>Estimated tax</span>
+              <span>Demo tax</span>
               <span className="text-ink">{formatCurrency(tax)}</span>
             </div>
             <div className="my-2 h-px bg-outline/10" />
@@ -120,7 +121,7 @@ export function CartPageClient() {
 
           <div className="rounded-[24px] bg-white p-5 shadow-sm">
             <p className="text-xs leading-relaxed text-muted">
-              Secure checkout with SSL encryption. Free shipping on all orders over $150. Easy 30-day returns.
+              Demo totals only. No payment is collected and no products are shipped.
             </p>
           </div>
 
@@ -133,7 +134,7 @@ export function CartPageClient() {
           </Link>
           
           <p className="text-center text-[10px] font-bold uppercase tracking-widest text-muted/50">
-            LumiBelle Secure Payment
+            LumiBelle Demo · No Payment
           </p>
         </div>
       </aside>

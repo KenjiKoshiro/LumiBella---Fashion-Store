@@ -42,3 +42,11 @@ a {
 ::selection {
   @apply bg-blush/40 text-ink;
 }
+
+:focus-visible { outline: 3px solid #8b3a50; outline-offset: 4px; }
+body { padding-bottom: 5rem; }
+@media (min-width: 768px) { body { padding-bottom: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

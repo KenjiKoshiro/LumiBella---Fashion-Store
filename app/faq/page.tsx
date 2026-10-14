@@ -7,7 +7,7 @@ export default function FAQPage() {
         <p className="font-headline text-xs font-semibold uppercase tracking-[0.35em] text-primary">FAQ</p>
         <h1 className="mt-3 font-headline text-5xl font-extrabold tracking-tight">Questions shoppers usually ask</h1>
         <p className="mt-4 max-w-3xl text-muted">
-          This page now reflects the refreshed storefront structure, Supabase catalog strategy, and the included product image audit results.
+          Everything you need to know about exploring this demo.
         </p>
       </div>
 

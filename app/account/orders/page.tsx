@@ -1,14 +1,14 @@
 const orders = [
-  { id: "LB-24001", status: "Processing", total: "$136.00", date: "Mar 28, 2026" },
-  { id: "LB-23988", status: "Delivered", total: "$82.00", date: "Mar 11, 2026" },
-  { id: "LB-23931", status: "Delivered", total: "$58.00", date: "Feb 25, 2026" }
+  { id: "LB-24001", status: "Processing", total: "THB 136.00", date: "Mar 28, 2026" },
+  { id: "LB-23988", status: "Delivered", total: "THB 82.00", date: "Mar 11, 2026" },
+  { id: "LB-23931", status: "Delivered", total: "THB 58.00", date: "Feb 25, 2026" }
 ];
 
 export default function OrderHistoryPage() {
   return (
     <div className="rounded-[32px] bg-surface-card p-6 shadow-ambient">
-      <h1 className="font-headline text-4xl font-extrabold tracking-tight">Order history</h1>
-      <p className="mt-3 text-muted">Customers can view order statuses, reorder items, and track fulfillment here.</p>
+      <h1 className="font-headline text-4xl font-extrabold tracking-tight">Sample order history</h1>
+      <p className="mt-3 text-muted">These are illustrative records, not purchases. Demo receipts are stored only in your browser session.</p>
 
       <div className="mt-8 overflow-hidden rounded-[28px] border border-outline/15">
         <table className="min-w-full bg-white text-left text-sm">

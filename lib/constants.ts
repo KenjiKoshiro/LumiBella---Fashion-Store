@@ -2,7 +2,7 @@ export const brand = {
   name: "LumiBelle",
   tagline: "Soft light. Strong style.",
   description:
-    "LumiBelle is a modern, conversion-focused fashion storefront for girls and young women. The experience blends editorial softness with a quick, mobile-first shopping flow."
+    "A fashion demo from Thailand. Explore considered pieces, everyday layers, and your own sense of style."
 };
 
 export const navigation = [
@@ -15,18 +15,9 @@ export const navigation = [
 ];
 
 export const valueProps = [
-  {
-    title: "Verified catalog",
-    description: "The starter now distinguishes between working image links and broken ones so every product still renders beautifully."
-  },
-  {
-    title: "Fit confidence",
-    description: "Every product page includes a height and weight size recommendation to help shoppers choose the right fit faster."
-  },
-  {
-    title: "Mobile-first polish",
-    description: "Large tap targets, sticky navigation, rounded cards, and clean spacing keep the storefront feeling premium on smaller screens."
-  }
+  { title: "Find your style", description: "Browse the collection and explore colours, silhouettes, and outfit ideas." },
+  { title: "Fit inspiration", description: "Try the size helper as an illustration. Measurements and recommendations are not a fit guarantee." },
+  { title: "A demo to explore", description: "Save favourites and try checkout without payments or deliveries." }
 ];
 
 export const testimonials = [
@@ -45,26 +36,10 @@ export const testimonials = [
 ];
 
 export const faqs = [
-  {
-    question: "How many uploaded product image URLs were usable?",
-    answer:
-      "The included audit found 42 total image URLs, with 14 accessible and 28 broken or non-image responses. Broken images now fall back to polished local placeholders."
-  },
-  {
-    question: "Does the catalog work with Supabase?",
-    answer:
-      "Yes. The storefront tries the richer LumiBelle Supabase schema first, then a legacy simple products table, and finally a local fallback demo dataset if the database is empty."
-  },
-  {
-    question: "How does size recommendation work?",
-    answer:
-      "Customers can enter height, weight, optional age, and fit preference. The logic compares those inputs to stored size chart ranges and returns the best match or nearest alternative."
-  },
-  {
-    question: "Can I still extend admin and checkout later?",
-    answer:
-      "Yes. The project keeps admin, account, checkout, and worker folders in place, but removes brittle dependencies on incomplete mock types."
-  }
+  { question: "Can I buy these pieces?", answer: "LumiBelle is a demo. You can browse products and simulate checkout, but no purchase or delivery takes place." },
+  { question: "Why can I change currency?", answer: "Catalog prices use THB. Other currencies are estimates from dated exchange rates. If rates are unavailable, prices stay in THB." },
+  { question: "Where are my favourites saved?", answer: "Your bag and wishlist are saved in this browser when storage is available. Demo receipts last for the browser session." },
+  { question: "Does the contact form send an email?", answer: "No. It is a local demonstration. Use fictional information; nothing is emailed or stored." }
 ];
 
 export const couponCatalog = {

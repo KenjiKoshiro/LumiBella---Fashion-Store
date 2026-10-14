@@ -6,8 +6,10 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useState,
   type ReactNode
 } from "react";
+import { validCart } from "@/lib/demo";
 import { CartItem, WishlistItem } from "@/lib/types";
 
 type StoreState = {
@@ -44,7 +46,7 @@ function reducer(state: StoreState, action: StoreAction): StoreState {
         const nextCart = [...state.cart];
         nextCart[existingIndex] = {
           ...nextCart[existingIndex],
-          quantity: nextCart[existingIndex].quantity + action.payload.quantity
+          quantity: Math.min(99, nextCart[existingIndex].quantity + action.payload.quantity)
         };
         return { ...state, cart: nextCart, isCartDrawerOpen: true };
       }
@@ -68,7 +70,7 @@ function reducer(state: StoreState, action: StoreAction): StoreState {
         cart: state.cart.map((item) =>
           item.slug === action.payload.slug &&
           item.size === action.payload.size
-            ? { ...item, quantity: Math.max(1, action.payload.quantity) }
+            ? { ...item, quantity: Math.min(99, Math.max(1, action.payload.quantity)) }
             : item
         )
       };
@@ -109,16 +111,23 @@ const StoreContext = createContext<StoreContextValue | null>(null);
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
-    const persisted = window.localStorage.getItem("lumibelle-store");
-    if (persisted) {
-      dispatch({ type: "HYDRATE", payload: JSON.parse(persisted) as StoreState });
-    }
+    try {
+      const persisted = JSON.parse(localStorage.getItem("lumibelle-store") ?? "null");
+      if (persisted && validCart(persisted.cart) && Array.isArray(persisted.wishlist)) {
+        const wishlist = persisted.wishlist.filter((item: WishlistItem) => item &&
+          [item.productId, item.slug, item.name, item.image].every(value => typeof value === "string") &&
+          typeof item.price === "number" && Number.isFinite(item.price) && item.price >= 0).slice(0, 100);
+        dispatch({ type: "HYDRATE", payload: { cart: persisted.cart, wishlist, isCartDrawerOpen: false } });
+      }
+    } catch { /* Corrupt or blocked storage must not crash the storefront. */ }
+    setHydrated(true);
   }, []);
-
   useEffect(() => {
-    window.localStorage.setItem("lumibelle-store", JSON.stringify(state));
-  }, [state]);
+    if (!hydrated) return;
+    try { localStorage.setItem("lumibelle-store", JSON.stringify(state)); } catch { /* Optional persistence */ }
+  }, [state, hydrated]);
 
   const value = useMemo<StoreContextValue>(
     () => ({

@@ -17,6 +17,8 @@ export function getStoragePublicUrl(path: string | null | undefined, bucket: str
 
   // If it's already a full URL, return it as is
   if (path.startsWith("http")) return path;
+  if (path.startsWith("/")) return path;
+  if (!SUPABASE_URL) return "/placeholders/product-1.svg";
 
   // Ensure path doesn't start with a slash
   const cleanPath = path.startsWith("/") ? path.substring(1) : path;

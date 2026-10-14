@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
 
 type Props = {
@@ -16,6 +16,8 @@ export function ScrollReveal({
   direction = "up",
   className 
 }: Props) {
+  const reduced = useReducedMotion();
+  if (reduced) return <div className={className}>{children}</div>;
   const directions = {
     up: { y: 30, x: 0 },
     down: { y: -30, x: 0 },

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { CatalogImage as Image } from "@/components/shared/catalog-image";
 
 type ProductGalleryProps = {
   images: string[];
