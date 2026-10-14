@@ -112,7 +112,7 @@ export default function AdminDashboardPage() {
   return (
     <AdminShell
       title="Morning, Curator."
-      description="L'Atelier is looking beautiful today."
+      description="LumiBelle is looking beautiful today."
     >
       {/* ── KPI cards ──────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-5 mb-8">

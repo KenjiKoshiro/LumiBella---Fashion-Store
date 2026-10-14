@@ -8,6 +8,7 @@
 
 # next.js
 /.next/
+/.next-dev/
 /out/
 
 # production
@@ -33,3 +34,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*
+
+/supabase/.temp/

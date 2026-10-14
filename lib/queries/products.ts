@@ -26,6 +26,8 @@ type ModernProductRow = {
   tags?: string[] | null;
   collection?: string | null;
   price: number | string;
+  stock?: number;
+  image_url?: string;
   compare_at_price?: number | string | null;
   rating?: number | string | null;
   review_count?: number | null;
@@ -205,7 +207,6 @@ async function fetchModernCatalog() {
     console.error("❌ Supabase Category Error:", categoryError);
     throw categoryError;
   }
-  console.log(`✅ Found ${categoryRows?.length || 0} categories in Supabase`);
 
   const categoryMap = new Map<string, Category>(
     (categoryRows ?? []).map((row) => [
@@ -223,7 +224,7 @@ async function fetchModernCatalog() {
   const { data: productRows, error: productError } = await supabase
     .from("products")
     .select(
-      "id, category_id, name, slug, subcategory, short_description, description, material_details, size_guide, model_info, tags, collection, price, compare_at_price, rating, review_count, featured, is_new_arrival, is_best_seller, is_on_sale, free_size, status"
+      "id, category_id, name, slug, subcategory, short_description, description, material_details, size_guide, model_info, tags, collection, price, compare_at_price, rating, review_count, featured, is_new_arrival, is_best_seller, is_on_sale, free_size, status, stock, image_url"
     )
     .eq("status", "active")
     .order("created_at", { ascending: false });
@@ -232,40 +233,13 @@ async function fetchModernCatalog() {
     console.error("❌ Supabase Product Error:", productError);
     throw productError;
   }
-  console.log(`✅ Found ${productRows?.length || 0} products in Supabase`);
 
   const ids = (productRows ?? []).map((row) => row.id);
 
-  console.log("🔍 Fetching images/variants/rules for products...");
-  const [imagesRes, variantsRes, sizeChartRes] = await Promise.all([
-    ids.length
-      ? supabase
-          .from("product_images")
-          .select("product_id, storage_path, is_primary, sort_order")
-          .in("product_id", ids)
-          .order("sort_order", { ascending: true })
-      : Promise.resolve({ data: [], error: null }),
-    ids.length
-      ? supabase
-          .from("product_variants")
-          .select("product_id, color_name, color_hex, size_label")
-          .in("product_id", ids)
-      : Promise.resolve({ data: [], error: null }),
-    ids.length
-      ? supabase
-          .from("size_chart_rules")
-          .select("size_label, height_min_cm, height_max_cm, weight_min_kg, weight_max_kg, size_charts(product_id)")
-      : Promise.resolve({ data: [], error: null })
-  ]);
-
-  if (imagesRes.error) {
-    console.error("❌ Supabase Image Error:", imagesRes.error);
-    throw imagesRes.error;
-  }
-  console.log(`✅ Found ${imagesRes.data?.length || 0} image relations in Supabase`);
-  
-  if (variantsRes.error) console.warn("⚠️ Variants error:", variantsRes.error);
-  if (sizeChartRes.error) console.warn("⚠️ Size chart error:", sizeChartRes.error);
+  const imagesRes = ids.length
+    ? await supabase.from("product_images").select("product_id, storage_path, is_primary, sort_order").in("product_id", ids).order("is_primary", { ascending: false }).order("sort_order", { ascending: true })
+    : { data: [], error: null };
+  if (imagesRes.error) throw imagesRes.error;
 
   const imagesByProduct = new Map<string, string[]>();
 
@@ -275,55 +249,17 @@ async function fetchModernCatalog() {
     imagesByProduct.set(row.product_id, uniqueStrings(current));
   }
 
-  const variantsByProduct = new Map<
-    string,
-    { sizes: string[] }
-  >();
-
-  for (const row of (variantsRes.data ?? []) as ProductVariantRow[]) {
-    const current = variantsByProduct.get(row.product_id) ?? { sizes: [] };
-    const productImages = imagesByProduct.get(row.product_id) ?? [];
-
-    if (row.size_label && !current.sizes.includes(row.size_label)) {
-      current.sizes.push(row.size_label);
-    }
-
-    variantsByProduct.set(row.product_id, current);
-  }
-
-  const rulesByProduct = new Map<string, SizeChartRule[]>();
-
-  for (const row of (sizeChartRes.data ?? []) as SizeChartRow[]) {
-    const productId = Array.isArray(row.size_charts)
-      ? row.size_charts[0]?.product_id
-      : row.size_charts?.product_id;
-
-    if (!productId) continue;
-
-    const current = rulesByProduct.get(productId) ?? [];
-    current.push({
-      label: row.size_label,
-      heightMin: row.height_min_cm,
-      heightMax: row.height_max_cm,
-      weightMin: row.weight_min_kg,
-      weightMax: row.weight_max_kg
-    });
-    rulesByProduct.set(productId, current);
-  }
-
   const products = (productRows ?? []).map((row: ModernProductRow) => {
     const category = categoryMap.get(row.category_id ?? "");
     const categorySlug = category?.slug ?? "dresses";
     const freeSize = Boolean(row.free_size) || categorySlug === "accessories";
 
-    const sizes = variantsByProduct.get(row.id)?.sizes.length
-      ? variantsByProduct.get(row.id)!.sizes
-      : defaultSizes(categorySlug, freeSize);
-
-    const rawImages = imagesByProduct.get(row.id) ?? [];
-    const images = rawImages.length 
-      ? rawImages.map(path => getStoragePublicUrl(path))
-      : [placeholderFor(categorySlug)];
+    const saved = getFallbackProductBySlug(row.slug);
+    const sizes = saved?.sizes ?? defaultSizes(categorySlug, freeSize);
+    const rawImages = imagesByProduct.get(row.id) ?? (row.image_url ? [row.image_url] : []);
+    const images = saved?.imageAuditStatus === "broken"
+      ? saved.images
+      : rawImages.length ? rawImages.map(path => getStoragePublicUrl(path)) : [placeholderFor(categorySlug)];
 
     const primaryImage = images[0];
 
@@ -352,16 +288,14 @@ async function fetchModernCatalog() {
       freeSize,
       images,
       primaryImage,
-      inventoryCount: 12,
+      inventoryCount: row.stock ?? 0,
       newArrival: Boolean(row.is_new_arrival),
       bestSeller: Boolean(row.is_best_seller),
       onSale: Boolean(row.is_on_sale) || Number(row.compare_at_price ?? 0) > Number(row.price),
       featured: Boolean(row.featured),
       trending: Boolean(row.is_best_seller || row.featured),
       status: row.status ?? "active",
-      sizeChart: rulesByProduct.get(row.id)?.length
-        ? rulesByProduct.get(row.id)!
-        : defaultSizeChart(sizes),
+      sizeChart: saved?.sizeChart ?? defaultSizeChart(sizes),
       relatedSlugs: [],
       sourceImageUrl: primaryImage,
       imageAuditStatus: primaryImage.startsWith("http") ? "ok" : "placeholder"
@@ -417,10 +351,12 @@ const getCatalog = cache(async () => {
   });
   if (!hasSupabaseConfig()) return fallback();
   try {
-    return { ...(await fetchModernCatalog()), available: true };
+    const catalog = await fetchModernCatalog();
+    return catalog.products.length ? { ...catalog, available: true } : fallback();
   } catch {
     try {
-      return { ...(await fetchLegacyCatalog()), available: true };
+      const catalog = await fetchLegacyCatalog();
+      return catalog.products.length ? { ...catalog, available: true } : fallback();
     } catch {
       console.warn("Catalog unavailable; displaying the existing preview catalog.");
       return fallback();
@@ -467,7 +403,7 @@ export async function getProductsByCategory(categorySlug: string) {
 
 export async function getProductBySlug(slug: string) {
   const products = await getAllProducts();
-  return products.find((product) => product.slug === slug) ?? getFallbackProductBySlug(slug) ?? null;
+  return products.find((product) => product.slug === slug) ?? null;
 }
 
 export async function getRelatedProducts(product: Product) {
@@ -495,5 +431,5 @@ export async function searchProducts(query: string) {
       .includes(normalized)
   );
 
-  return results.length ? results : searchFallbackProducts(query);
+  return results;
 }

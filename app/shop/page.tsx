@@ -19,7 +19,7 @@ export default async function ShopPage() {
     <CatalogGrid
       products={products}
       title="Shop all"
-      description="A polished fashion catalog with cleaner product cards, working local fallbacks for broken remote images, and a shared data layer that can read from Supabase."
+      description="Explore everyday layers, occasion pieces, and finishing touches. Filter by category or find your favourites by price."
     />
   );
 }

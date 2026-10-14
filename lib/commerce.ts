@@ -6,13 +6,11 @@ export function calculateSubtotal(items: CartItem[]) {
 }
 
 export function calculateShipping(subtotal: number) {
-  if (subtotal >= 1500) return 0;
-  if (subtotal === 0) return 0;
-  return 100;
+  return 0; // Demo only: no delivery charge or shipment.
 }
 
 export function calculateTax(subtotal: number) {
-  return subtotal * 0.08;
+  return 0; // Demo only: no tax is collected.
 }
 
 export function applyCoupon(code: string, subtotal: number, shipping: number) {

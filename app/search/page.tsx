@@ -2,7 +2,7 @@ import { CatalogGrid } from "@/components/commerce/catalog-grid";
 import { searchProducts } from "@/lib/queries/products";
 
 export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
-  const query = searchParams.q ?? "";
+  const query = typeof searchParams.q === "string" ? searchParams.q.slice(0, 100) : "";
   const results = query ? await searchProducts(query) : [];
 
   return (

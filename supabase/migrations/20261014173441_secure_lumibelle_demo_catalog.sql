@@ -1,0 +1,16 @@
+alter table public.categories enable row level security;
+alter table public.products enable row level security;
+alter table public.product_images enable row level security;
+alter table public.admin_users enable row level security;
+drop policy if exists "public catalog" on public.categories;
+drop policy if exists allow_public_read_products on public.products;
+drop policy if exists "public can read active products" on public.products;
+drop policy if exists allow_public_read_images on public.product_images;
+create policy "demo active categories" on public.categories for select to anon, authenticated using (is_active = true);
+create policy "demo active products" on public.products for select to anon, authenticated using (is_active = true and status = 'active');
+create policy "demo active product images" on public.product_images for select to anon, authenticated using (exists (select 1 from public.products p where p.id = product_id and p.is_active = true and p.status = 'active'));
+create policy "own admin membership" on public.admin_users for select to authenticated using (user_id = (select auth.uid()));
+revoke all on public.admin_users from anon;
+revoke insert, update, delete, truncate, references, trigger on public.categories, public.products, public.product_images, public.admin_users from anon, authenticated;
+grant select on public.categories, public.products, public.product_images to anon, authenticated;
+grant select on public.admin_users to authenticated;

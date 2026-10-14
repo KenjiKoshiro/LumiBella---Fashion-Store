@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST() {
   return NextResponse.json(
-    { message: "Message delivery is temporarily unavailable. Your message has not been sent. Please try again later." },
+    { message: "This is a demo. No email is sent or stored." },
     { status: 503 }
   );
 }

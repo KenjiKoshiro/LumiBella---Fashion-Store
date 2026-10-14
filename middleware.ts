@@ -35,7 +35,7 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const pathname = request.nextUrl.pathname;
-  const isProtected = pathname.startsWith("/account") || pathname.startsWith("/checkout");
+  const isProtected = pathname.startsWith("/account");
   const isAdmin = pathname.startsWith("/admin");
 
   if ((isProtected || isAdmin) && !user) {
@@ -58,5 +58,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/account/:path*", "/checkout", "/admin/:path*"]
+  matcher: ["/account/:path*", "/admin/:path*"]
 };
